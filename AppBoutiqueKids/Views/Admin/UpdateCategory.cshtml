@@ -1,0 +1,29 @@
+﻿@model Category
+
+
+    <section class="main-content">
+        <div class="row">
+            <div class="span5">
+                <h4 class="title"><span class="text"><strong>Edit Category</strong> Form</span></h4>
+
+                <form asp-controller="Admin" asp-action="UpdateCategory" method="post">
+
+                    <fieldset>
+                        <div class="control-group">
+                            <input type="hidden" asp-for="Id" />
+                            <label asp-for="Name"></label>
+                            <input asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+
+                        <div class="actions"><input tabindex="9" class="btn btn-inverse large" type="submit" value="Submit"></div>
+                    </fieldset>
+
+
+                </form>
+
+
+            </div>
+
+        </div>
+    </section>

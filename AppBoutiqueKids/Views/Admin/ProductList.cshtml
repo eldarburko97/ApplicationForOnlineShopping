@@ -1,0 +1,43 @@
+﻿@model List<Product>
+
+
+
+<h4>Products</h4>
+
+<div class="control-group">
+
+    <table class="table">
+
+        <thead>
+            <tr>
+                <td>Name</td>
+                <td>Price</td>
+                <td>Quantity</td>
+                <td>Brand</td>
+                <td>Category</td>
+                <td>Image</td>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Price</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.Brand.Name</td>
+                    <td>@item.Category.Name</td>
+                    <td>
+                     @{ 
+                         var PhotoPath = "~/Images/" + item.ProductImagePath;
+                     }
+                    <img src="@PhotoPath" style="max-height:45px;max-width:45px"  />
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+
+</div>

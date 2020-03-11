@@ -1,0 +1,74 @@
+﻿@model ProductInputVM
+
+@{ 
+    var PhotoPath = "~/images/" + Model.ExistingPhotoPath;
+}
+
+
+<section class="main-content">
+    <div class="row">
+        <div class="span5">
+            <h4 class="title"><span class="text"><strong>Edit Product</strong> Form</span></h4>
+            
+            <form asp-controller="Admin" asp-action="UpdateProduct" method="post" enctype="multipart/form-data">
+
+                <fieldset>
+                    <div class="control-group">
+                        <input type="hidden" asp-for="Id"  />
+                        <input type="hidden" asp-for="ExistingPhotoPath"  />
+                        <label asp-for="Name"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="control-group">
+                        <label asp-for="Price"></label>
+                        <input asp-for="Price" class="form-control" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+
+                    <div class="control-group">
+                        <label asp-for="Quantity"></label>
+                        <input asp-for="Quantity" class="form-control" />
+                        <span asp-validation-for="Quantity" class="text-danger"></span>
+                    </div>
+
+                    <div class="control-group">
+                        <label asp-for="Brands"></label>
+                        <select asp-for="BrandId" class="form-control" asp-items="@(Model.Brands)">
+                            <option value="">-- Select Brand --</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <label asp-for="Categories"></label>
+                        <select asp-for="CategoryId" class="form-control" asp-items="@(Model.Categories)">
+                            <option value="">-- Select Category --</option>
+                        </select>
+                    </div>
+
+
+                    <div class="control-group">
+                        <label asp-for="Photo"></label>
+                        
+                        <div class="custom-file">
+     
+                            <input asp-for="Photo" class="form-control custom-file-input" />
+
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <img src="@PhotoPath" style="height:200px ; width:auto" asp-append-version="true"  />
+                    </div>
+
+                    <div class="actions"><input tabindex="9" class="btn btn-inverse large" type="submit" value="Submit"></div>
+                </fieldset>
+
+
+            </form>
+
+
+        </div>
+
+    </div>
+</section>

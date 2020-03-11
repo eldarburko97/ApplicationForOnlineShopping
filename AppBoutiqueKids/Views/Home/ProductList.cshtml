@@ -1,0 +1,70 @@
+﻿@model IEnumerable<AppBoutiqueKids.Models.Product>
+
+
+
+<div class="row">
+    <div class="span9 full">
+        @if (User.IsInRole(Globals.Admin))
+        {
+            <table class="table">
+                <tr>
+                    <td>
+                        <p>
+                            <a asp-controller="Admin" asp-action="AddProduct" class="btn btn-warning">Add Product</a>
+                        </p>
+                    </td>
+                    <td>
+                        <p>
+                            <a asp-controller="Admin" asp-action="AdminHomePage" class="btn btn-warning">Back</a>
+                        </p>
+                    </td>
+                </tr>
+            </table>
+           
+        }
+
+        <ul class="thumbnails listing-products">
+            @foreach (var item in Model)
+            {
+
+                var PhotoPath = "~/images/" + item.ProductImagePath;
+
+                <li class="span3">
+                    <div class="product-box">
+                        <span class="sale_tag"></span>
+                        <a asp-controller="Home" asp-action="ProductDetails" asp-route-id="@item.Id">
+                            <img alt="" src="@PhotoPath" asp-append-version="true">
+                        </a>
+                        <br>
+                        <a asp-controller="Home" asp-action="ProductDetails" asp-route-id="@item.Id" class="title">
+                            @item.Name
+                        </a><br>
+                        @*<a href="#" class="category">@item.Category.Name</a>
+                        <p class="price">$@item.Price</p>*@
+
+                    </div>
+                </li>
+            }
+        </ul>
+        <hr>
+        @*<div class="pagination pagination-small pagination-centered">
+            <ul>
+                <li><a href="#">Prev</a></li>
+                <li class="active"><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">Next</a></li>
+            </ul>
+        </div>*@
+    </div>
+</div>
+
+
+@section Styles {
+    <style>
+        .full {
+            width: 100%;
+        }
+    </style>
+}

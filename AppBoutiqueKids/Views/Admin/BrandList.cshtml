@@ -1,0 +1,53 @@
+﻿@model IEnumerable<AppBoutiqueKids.Models.Brand>
+@{ 
+    
+}
+
+
+<div class="row">
+    <div class="span9 full">
+        <table class="table">
+            <tr>
+                <td>
+                    <p>
+                        <a asp-controller="Admin" asp-action="AddBrand" class="btn btn-warning">Add Brand</a>
+                    </p>
+                </td>
+                <td>
+                    <p>
+                        <a asp-controller="Admin" asp-action="AdminHomePage" class="btn btn-warning">Back</a>
+                    </p>
+                </td>
+            </tr>
+        </table>
+
+
+        <div class="control-group">
+
+            <table class="table">
+
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Photo</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Name</td>
+                            <td><img src="~/images/@item.Photo" style="width:50px;height:50px;"/></td>
+                            <td><a asp-controller="Admin" asp-action="DeleteBrand" asp-route-id="@item.Id" class="btn btn-danger">Delete</a></td>
+                            <td><a asp-controller="Admin" asp-action="UpdateBrand" asp-route-id="@item.Id" class="btn btn-primary">Edit</a></td>
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+</div>

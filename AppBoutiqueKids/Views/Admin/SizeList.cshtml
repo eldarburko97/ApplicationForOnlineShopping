@@ -1,0 +1,28 @@
+﻿@model IEnumerable<Size>
+
+<h1>Size List</h1>
+
+<div class="control-group">
+
+    <table class="table">
+
+        <thead>
+            <tr>
+                <th>Name</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td><button class="btn" type="button"><a asp-controller="Admin" asp-action="DeleteSize" asp-route-id="@item.Id">Delete</a></button></td>
+                    <td><button class="btn" type="button"><a asp-controller="Admin" asp-action="UpdateSize" asp-route-id="@item.Id">Edit</a></button></td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+
+</div>

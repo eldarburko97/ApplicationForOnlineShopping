@@ -1,0 +1,196 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>@ViewData["Title"] - AppBoutiqueKids</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <!--[if ie]><meta content='IE=8' http-equiv='X-UA-Compatible'/><![endif]-->
+    <!-- bootstrap -->
+    <link href="~/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+
+    <link href="~/css/bootstrappage.css" rel="stylesheet" />
+
+    <!-- global styles -->
+    <link href="~/css/flexslider.css" rel="stylesheet" />
+    <link href="~/css/main.css" rel="stylesheet" />
+
+    <link href="~/css/product.css" rel="stylesheet" />
+
+    <!-- scripts -->
+    <script src="~/js/jquery-1.7.2.min.js"></script>
+    <script src="~/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/js/superfish.js"></script>
+    <script src="~/js/jquery.scrolltotop.js"></script>
+    <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <script src="js/respond.min.js"></script>
+    <![endif]-->
+
+    @RenderSection("Styles", required: false)
+
+    <style>
+        .full {
+            width: 100%;
+        }
+    </style>
+
+</head>
+<body>
+    <div id="top-bar" class="container">
+        <div class="row">
+            <div class="span4">
+                <form method="POST" class="search_form">
+                    <input type="text" class="input-block-level search-query" Placeholder="eg. T-sirt">
+                </form>
+            </div>
+            <div class="span8">
+                <div class="account pull-right">
+                    <ul class="user-menu">
+                        @if (!SignInManager.IsSignedIn(User))
+                        {
+                            <li><a href="/Identity/Account/Register">Register</a></li>
+                            <li><a href="/Identity/Account/Login">Login</a></li>
+                        }
+                        else
+                        {
+                            <li><a href="~/Home/Cart">Your Cart</a></li>
+                            <li><a href="checkout.html">Checkout</a></li>
+                            <li><a href="#">@User.Identity.Name</a></li>
+                            <li><form  asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm">
+                                    Logout
+                                <input type="submit" value="Logout"/>   
+                                </form> </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="wrapper" class="container">
+        <section class="navbar main-menu">
+            <div class="navbar-inner main-menu">
+                <a href="index.html" class="logo pull-left"><img src="~/images/logo.png" class="site_logo" alt=""></a>
+                <nav id="menu" class="pull-right">
+                    <ul>
+                        <li>
+                            <a href="~/Home/WomanView">Woman</a>
+                        </li>
+                        <li><a href="~/Home/ManView">Man</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </section>
+        <section class="homepage-slider" id="home-slider">
+            <div class="flexslider">
+                <ul class="slides">
+                    <li>
+                        <img src="~/images/carousel/banner-1.jpg" alt="" />
+                    </li>
+                    <li>
+                        <img src="~/images/carousel/banner-2.jpg" alt="" />
+                        <div class="intro">
+                            <h1>Mid season sale</h1>
+                            <p><span>Up to 50% Off</span></p>
+                            <p><span>On selected items online and in stores</span></p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+        <section class="main-content">
+            @RenderBody()
+        </section>
+        <section class="our_client">
+            <h4 class="title"><span class="text">Manufactures</span></h4>
+            <div class="row">
+                <div class="span2">
+                    <a href="#"><img alt="" src="~/images/clients/14.png"></a>
+                </div>
+                <div class="span2">
+                    <a href="#"><img alt="" src="~/images/clients/35.png"></a>
+                </div>
+                <div class="span2">
+                    <a href="#"><img alt="" src="~/images/clients/1.png"></a>
+                </div>
+                <div class="span2">
+                    <a href="#"><img alt="" src="~/images/clients/2.png"></a>
+                </div>
+                <div class="span2">
+                    <a href="#"><img alt="" src="~/images/clients/3.png"></a>
+                </div>
+                <div class="span2">
+                    <a href="#"><img alt="" src="~/images/clients/4.png"></a>
+                </div>
+            </div>
+        </section>
+        <section id="footer-bar">
+            <div class="row">
+                <div class="span3">
+                    <h4>Navigation</h4>
+                    <ul class="nav">
+                        <li><a href="~/Home/Index">Homepage</a></li>
+                        <li><a href="~/Home/ContactUs">Contact Us</a></li>
+                        <li><a href="~/Home/Cart">Your Cart</a></li>
+                        <li><a href="/Identity/Account/Login">Login</a></li>
+                    </ul>
+                </div>
+                @*<div class="span4">
+                        <h4>My Account</h4>
+                        <ul class="nav">
+                            <li><a href="#">My Account</a></li>
+                            <li><a href="#">Order History</a></li>
+                            <li><a href="#">Wish List</a></li>
+                            <li><a href="#">Newsletter</a></li>
+                        </ul>
+                    </div>*@<div class="span4">
+                    <h4></h4>
+                    <ul class="nav">
+                        <li><a href="#"></a></li>
+                        <li><a href="#"></a></li>
+                        <li><a href="#"></a></li>
+                        <li><a href="#"></a></li>
+                    </ul>
+                </div>
+                <div class="span5">
+                    <p class="logo"><img src="~/images/logo.png" class="site_logo" alt=""></p>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. the  Lorem Ipsum has been the industry's standard dummy text ever since the you.</p>
+                    <br />
+                    <span class="social_icons">
+                        <a class="facebook" href="#">Facebook</a>
+                        <a class="twitter" href="#">Twitter</a>
+                        <a class="skype" href="#">Skype</a>
+                        <a class="vimeo" href="#">Vimeo</a>
+                    </span>
+                </div>
+            </div>
+        </section>
+        <section id="copyright">
+            @*<span>Copyright 2013 bootstrappage template  All right reserved.</span>*@<span></span>
+        </section>
+    </div>
+    <script src="~/js/common.js"></script>
+    <script src="~/js/jquery.flexslider-min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $(document).ready(function () {
+                $('.flexslider').flexslider({
+                    animation: "fade",
+                    slideshowSpeed: 4000,
+                    animationSpeed: 600,
+                    controlNav: false,
+                    directionNav: true,
+                    controlsContainer: ".flex-container" // the container that holds the flexslider
+                });
+            });
+        });
+    </script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

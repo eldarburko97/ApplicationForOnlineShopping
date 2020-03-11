@@ -1,0 +1,25 @@
+﻿@model Size
+
+<h1>UpdateSize</h1>
+
+<section class="main-content">
+    <div class="row">
+        <div class="span5">
+            <h4 class="title"><span class="text"><strong>Edit Size</strong> Form</span></h4>
+
+            <form asp-controller="Admin" asp-action="UpdateSize" method="post">
+
+                <fieldset>
+                    <div class="control-group">
+                        <input asp-for="Id" hidden/>
+                        <input asp-for="Name" class="form-control" placeholder="Name" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="actions"><input tabindex="9" class="btn btn-inverse large" type="submit" value="Edit"></div>
+                </fieldset>
+            </form>
+
+
+        </div>
+</section>

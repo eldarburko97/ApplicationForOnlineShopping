@@ -1,0 +1,34 @@
+@model BrandInputViewModel
+@{ 
+    
+}
+
+<section class="main-content">
+    <div class="row">
+        <div class="span5">
+            <h4 class="title"><span class="text"><strong>Add Brand</strong> Form</span></h4>
+
+            <form asp-controller="Admin" asp-action="AddBrand" method="post" enctype="multipart/form-data">
+
+                <fieldset>
+                    <div class="control-group">
+                        <label asp-for="Name">Name:</label>
+                        <input asp-for="Name" class="form-control" /><br />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                        <label>Photo:</label>
+                        <input type="file" asp-for="Photo" class="custom-file"/>
+                        <label class="custom-file-label">Choose file...</label><br />
+                    </div>
+
+                    <div class="actions"><input tabindex="9" class="btn btn-inverse large" type="submit" value="Submit"></div>
+                </fieldset>
+
+
+            </form>
+
+
+        </div>
+    </div>
+
+</section>
+

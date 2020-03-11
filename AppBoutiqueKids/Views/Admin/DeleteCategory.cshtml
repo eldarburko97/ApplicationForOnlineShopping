@@ -1,0 +1,31 @@
+﻿@model Category
+
+    <section class="main-content">
+        <div class="row">
+            <div class="span5">
+                <h4 class="title"><span class="text"><strong>Delete Category</strong> Form</span></h4>
+
+                <form asp-controller="Admin" asp-action="DeleteCategory" method="post">
+
+                    <fieldset>
+                        <div class="control-group">
+                            <label asp-for="Name"></label>
+                            <select asp-for="Id"
+                                    class="form-control"
+                                    asp-items="@(new SelectList(@ViewBag.ListofCategories,"Id", "Name"))">
+                                <option value="">-- Select Category --</option>
+                            </select>
+
+                        </div>
+
+                        <div class="actions"><input tabindex="9" class="btn btn-inverse large" type="submit" value="Submit"></div>
+                    </fieldset>
+
+
+                </form>
+
+
+            </div>
+
+        </div>
+    </section>

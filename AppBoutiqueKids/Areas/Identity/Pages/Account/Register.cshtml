@@ -1,0 +1,58 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<section class="main-content">
+    <div class="row">
+        <div class="span7">
+            <h4 class="title"><span class="text"><strong>Register</strong> Form</span></h4>
+            <form asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-stacked">
+                <fieldset>
+                    <div class="control-group">
+                        <label asp-for="Input.Username" class="control-label"></label>
+                        <div class="controls">
+                            <input asp-for="Input.Username" class="input-xlarge" placeholder="Username" id="Username" />
+                            <span asp-validation-for="Input.Username" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label asp-for="Input.Email" class="control-label"></label>
+                        <div class="controls">
+                            <input asp-for="Input.Email" class="input-xlarge" placeholder="Email" id="Email" />
+                            <span asp-validation-for="Input.Email" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label asp-for="Input.Password" class="control-label"></label>
+                        <div class="controls">
+                            <input asp-for="Input.Password" placeholder="Enter your password" class="input-xlarge" />
+                            <span asp-validation-for="Input.Password" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label asp-for="Input.ConfirmPassword" class="control-label"></label>
+                        <div class="controls">
+                            <input asp-for="Input.ConfirmPassword" placeholder="Re-type your password" class="input-xlarge" />
+                            <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <hr>
+                    <div class="actions"><input tabindex="9" class="btn btn-inverse large" type="submit" value="Create your account"></div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</section>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        //$(document).ready();
+    </script>
+}

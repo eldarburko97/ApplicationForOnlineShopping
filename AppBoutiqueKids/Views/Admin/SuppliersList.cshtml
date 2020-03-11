@@ -1,0 +1,30 @@
+﻿@model List<Supplier>
+
+<h1>Suppliers List</h1>
+
+<div class="control-group">
+
+    <table class="table">
+
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Phone Number</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.PhoneNumber</td>
+                    <td><button class="btn" type="button"><a asp-controller="Admin" asp-action="DeleteSupplier" asp-route-id="@item.Id">Delete</a></button></td>
+                    <td><button class="btn" type="button"><a asp-controller="Admin" asp-action="UpdateSupplier" asp-route-id="@item.Id">Edit</a></button></td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+
+</div>
