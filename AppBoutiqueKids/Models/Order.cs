@@ -17,10 +17,6 @@ namespace AppBoutiqueKids.Models
         public DateTime OrderDate { get; set; }
 
         [Required]
-        [Column(TypeName = "date")]
-        public DateTime ShippDate { get; set; }
-
-        [Required]
         [Column(TypeName = "int")]
         public int SubTotal { get; set; }
 

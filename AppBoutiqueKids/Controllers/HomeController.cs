@@ -8,6 +8,7 @@ using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using AppBoutiqueKids.Services;
+using AppBoutiqueKids.ViewModels;
 
 namespace AppBoutiqueKids.Controllers
 {
@@ -43,10 +44,10 @@ namespace AppBoutiqueKids.Controllers
         {
             return View();
         }
-
-        public IActionResult Cart()
+        [HttpPost]
+        public IActionResult Cart(ProductCartViewModel model)
         {
-            return View();
+            return View(model);
         }
 
         public IActionResult ManView()
@@ -60,8 +61,17 @@ namespace AppBoutiqueKids.Controllers
 
         public IActionResult ProductDetails(int id)
         {
-            var model = _reposProduct.GetProduct(id);
-
+            var product = _reposProduct.GetProduct(id);
+            ProductCartViewModel model = new ProductCartViewModel
+            {
+                Id = product.Id,
+                ProductName = product.Name,
+                Price = product.Price,
+                Quantity = product.Quantity,
+                PhotoPath = product.ProductImagePath,
+                Brand = product.Brand.Name,
+                Category = product.Category.Name
+            };
             return View(nameof(ProductDetails), model);
         }
 
@@ -69,5 +79,6 @@ namespace AppBoutiqueKids.Controllers
         {
             return View(_reposProduct.GetProducts());
         }
+        
     }
 }

@@ -1,11 +1,10 @@
-﻿@model AppBoutiqueKids.Models.Product
+﻿@model AppBoutiqueKids.ViewModels.ProductCartViewModel
 
 @{
     ViewData["Title"] = "Product Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var PhotoPath = "~/images/" + Model.ProductImagePath;
+    var PhotoPath = "~/images/" + Model.PhotoPath;
 }
-
 
     <div class="row">
         <div class="span9 full">
@@ -16,8 +15,8 @@
                 </div>
                 <div class="span5">
                     <address>
-                        <strong>Brand:</strong> <span>@Model.Brand.Name</span><br>
-                        <strong>Category:</strong> <span>@Model.Category.Name</span><br>
+                        <strong>Brand:</strong> <span>@Model.Brand</span><br>
+                        <strong>Category:</strong> <span>@Model.Category</span><br>
                         <strong>Availability:</strong> <span>@(Model.Quantity < 0 ? "Out of stock" : Model.Quantity.ToString())</span><br>
                     </address>
                     <h4><strong>Price: $@Model.Price</strong></h4>
@@ -31,10 +30,14 @@
                     }
                     else
                     {
-                        <form class="form-inline">
+                        <form  method="post">
+                            <input asp-for="@Model.PhotoPath" hidden/><br />
+                            <input asp-for="@Model.Id" hidden/><br />
+                            <label>Product name:</label><input asp-for="@Model.ProductName" readonly/><br />
+                            <label>Price:</label><input asp-for="@Model.Price" readonly/><br />
                             <label>Qty:</label>
                             <input type="text" class="span1" placeholder="1">
-                            <button class="btn btn-inverse" type="submit">Add to cart</button>
+                            <button type="submit" class="btn btn-inverse" asp-controller="Home" asp-action="Cart">Add to cart</button>
                         </form>
                     }
                 </div></div><div class="row">

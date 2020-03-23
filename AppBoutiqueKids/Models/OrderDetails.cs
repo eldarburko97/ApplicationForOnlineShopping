@@ -16,11 +16,11 @@ namespace AppBoutiqueKids.Models
         [Column(TypeName = "int")]
         public int Price { get; set; }
 
-        [Required]
+        //[Required]
         [Column(TypeName = "int")]
         public int Discount { get; set; }
 
-        [Required]
+       // [Required]
         [Column(TypeName = "int")]
         public int DiscountPrice { get; set; }
 
