@@ -7,13 +7,10 @@ using System.Threading.Tasks;
 
 namespace AppBoutiqueKids.Models
 {
-    public class Order
+    public class Cart
     {
         [Key]
         public int Id { get; set; }
-        [Required]
-        [Column(TypeName = "date")]
-        public DateTime OrderDate { get; set; }
         public int UserId { get; set; }
         public User User { get; set; }
     }

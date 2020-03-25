@@ -28,6 +28,7 @@ namespace AppBoutiqueKids.Controllers
         private IProduct _reposProduct;
         private ICategory _reposCategory;
         private ISupplier _reposSupplier;
+        private IProductSize _reposProductSize;
         private readonly IUserData userData;
         private readonly UserManager<User> userManager;
         private readonly IHostingEnvironment _hostingEnvironment;
@@ -37,7 +38,7 @@ namespace AppBoutiqueKids.Controllers
             UserManager<User> userManager,IHostingEnvironment hostingEnvironment,
             ISize reposSize,IBrand reposBrand,
             IShipper reposShipper, IProduct reposProduct,
-            ICategory reposCategory,ISupplier reposSupplier)
+            ICategory reposCategory,ISupplier reposSupplier,IProductSize reposProductSize)
         {
             this.userData = userData;
             this.userManager = userManager;
@@ -48,6 +49,7 @@ namespace AppBoutiqueKids.Controllers
             _reposProduct = reposProduct;
             _reposCategory = reposCategory;
             _reposSupplier = reposSupplier;
+            _reposProductSize = reposProductSize;
         }
 
         [Authorize(Roles = Globals.Admin)]
@@ -113,8 +115,16 @@ namespace AppBoutiqueKids.Controllers
                     ProductImagePath = uniqueFileName
                 };
                 _reposProduct.AddProduct(product);
-              //  _context.Products.Add(product);
-               // _context.SaveChanges();
+                var listOfSize = _reposSize.GetSizes();
+                for(var s=0;s<listOfSize.Count();s++)
+                {
+                    ProductSize productSize = new ProductSize
+                    {
+                        ProductId = product.Id,
+                        SizeId = listOfSize[s].Id
+                    };
+                    _reposProductSize.Add(productSize);
+                }
                 return RedirectToAction("ProductList","Home");
             }
             return RedirectToAction("AddProduct");

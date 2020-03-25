@@ -22,7 +22,7 @@
                     <h4><strong>Price: $@Model.Price</strong></h4>
                 </div>
                 <div class="span5">
-    
+                
                     @if (User.IsInRole(Globals.Admin))
                     {
                         <a asp-controller="Admin" asp-action="UpdateProduct" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
@@ -31,12 +31,13 @@
                     else
                     {
                         <form  method="post">
-                            <input asp-for="@Model.PhotoPath" hidden/><br />
-                            <input asp-for="@Model.Id" hidden/><br />
+                            <input asp-for="@Model.PhotoPath" style="visibility:hidden"/><br />
+                            <input asp-for="@Model.Id" style="visibility:hidden"/><br />
                             <label>Product name:</label><input asp-for="@Model.ProductName" readonly/><br />
                             <label>Price:</label><input asp-for="@Model.Price" readonly/><br />
                             <label>Qty:</label>
-                            <input type="text" class="span1" placeholder="1">
+                            <input type="text" class="span1" placeholder="1"><br />
+                            <label>Availability sizes:</label><select asp-for="@Model.ProductSizeId" asp-items="@Model.ProductSizes"></select><br />
                             <button type="submit" class="btn btn-inverse" asp-controller="Home" asp-action="Cart">Add to cart</button>
                         </form>
                     }

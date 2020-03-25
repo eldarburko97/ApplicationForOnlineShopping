@@ -5,11 +5,12 @@ using System.Threading.Tasks;
 
 namespace AppBoutiqueKids.Models
 {
-    public class OrderDetails
+    public class CartDetails
     {
         public int Id { get; set; }
-        public int OrderId { get; set; }
-        public Order Order { get; set; }
+        public int CartId { get; set; }
+        public Cart Cart { get; set; }
+        public int Quantity { get; set; }
         public int ProductSizeId { get; set; }
         public ProductSize ProductSize { get; set; }
     }

@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using AppBoutiqueKids.Services;
 using AppBoutiqueKids.ViewModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace AppBoutiqueKids.Controllers
 {
@@ -16,10 +17,12 @@ namespace AppBoutiqueKids.Controllers
     public class HomeController : Controller
     {
         private IProduct _reposProduct;
+        private ApplicationDbContext _context;
 
         public HomeController(ApplicationDbContext context,IProduct reposProduct)
         {
             _reposProduct = reposProduct;
+            _context = context;
         }
         public IActionResult Index()
         {
@@ -47,6 +50,7 @@ namespace AppBoutiqueKids.Controllers
         [HttpPost]
         public IActionResult Cart(ProductCartViewModel model)
         {
+
             return View(model);
         }
 
@@ -62,6 +66,11 @@ namespace AppBoutiqueKids.Controllers
         public IActionResult ProductDetails(int id)
         {
             var product = _reposProduct.GetProduct(id);
+            var selectLista = _context.ProductSizes.Where(p => p.ProductId == product.Id).Select(s => new SelectListItem
+            {
+                Value = s.ProductSizeId.ToString(),
+                Text = s.Size.Name
+            }).ToList();
             ProductCartViewModel model = new ProductCartViewModel
             {
                 Id = product.Id,
@@ -70,7 +79,8 @@ namespace AppBoutiqueKids.Controllers
                 Quantity = product.Quantity,
                 PhotoPath = product.ProductImagePath,
                 Brand = product.Brand.Name,
-                Category = product.Category.Name
+                Category = product.Category.Name,
+                ProductSizes=selectLista
             };
             return View(nameof(ProductDetails), model);
         }

@@ -21,7 +21,7 @@ namespace AppBoutiqueKids.Repository
             Size size = _context.Size.Find(id);
             return size;
         }
-        public IEnumerable<Size> GetSizes() => _context.Size;
+        public List<Size> GetSizes() => _context.Size.ToList();
         Size ISize.AddSize(Size size)
         {
             _context.Size.Add(size);

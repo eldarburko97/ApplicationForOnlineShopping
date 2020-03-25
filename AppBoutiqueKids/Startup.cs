@@ -59,6 +59,7 @@ namespace AppBoutiqueKids
             services.AddScoped<ISize, SizeRepository>();
             services.AddScoped<IBrand, BrandRepository>();
             services.AddScoped<IShipper, ShipperRepository>();
+            services.AddScoped<IProductSize, ProductSizeRepository>();
             services.AddScoped<EmailSender, EmailSender>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

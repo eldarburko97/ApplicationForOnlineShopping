@@ -12,6 +12,6 @@ namespace AppBoutiqueKids.Services
         Size DeleteSize(int id);
         Size UpdateSize(Size model);
         Size GetSize(int id);
-        IEnumerable<Size> GetSizes();
+        List<Size> GetSizes();
     }
 }
