@@ -17,5 +17,6 @@ namespace AppBoutiqueKids.ViewModels
         public string PhotoPath { get; set; }
         public int ProductSizeId { get; set; }
         public List<SelectListItem> ProductSizes { get; set; }
+        public int UserId { get; set; }
     }
 }

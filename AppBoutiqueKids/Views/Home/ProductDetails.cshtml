@@ -31,8 +31,9 @@
                     else
                     {
                         <form  method="post">
-                            <input asp-for="@Model.PhotoPath" style="visibility:hidden"/><br />
-                            <input asp-for="@Model.Id" style="visibility:hidden"/><br />
+                            <input asp-for="@Model.PhotoPath" style="visibility:hidden"/>
+                            <input asp-for="@Model.Id" style="visibility:hidden"/>
+                            <input asp-for="@Model.UserId" style="visibility:hidden"/>
                             <label>Product name:</label><input asp-for="@Model.ProductName" readonly/><br />
                             <label>Price:</label><input asp-for="@Model.Price" readonly/><br />
                             <label>Qty:</label>

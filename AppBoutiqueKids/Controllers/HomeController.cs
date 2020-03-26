@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Authorization;
 using AppBoutiqueKids.Services;
 using AppBoutiqueKids.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Identity;
+using System;
 
 namespace AppBoutiqueKids.Controllers
 {
@@ -18,11 +20,13 @@ namespace AppBoutiqueKids.Controllers
     {
         private IProduct _reposProduct;
         private ApplicationDbContext _context;
+        private UserManager<User> _userManager;
 
-        public HomeController(ApplicationDbContext context,IProduct reposProduct)
+        public HomeController(ApplicationDbContext context, IProduct reposProduct, UserManager<User> userManager)
         {
             _reposProduct = reposProduct;
             _context = context;
+            _userManager = userManager;
         }
         public IActionResult Index()
         {
@@ -47,12 +51,28 @@ namespace AppBoutiqueKids.Controllers
         {
             return View();
         }
-        [HttpPost]
-        public IActionResult Cart(ProductCartViewModel model)
-        {
 
-            return View(model);
-        }
+        //[HttpPost]
+        //public IActionResult Cart(ProductCartViewModel model)
+        //{
+
+            
+
+            
+
+        //    // List<CartDetailsViewModel> list = new List<CartDetailsViewModel>();
+
+        //    //var list = _context.CartDetails.Where(w => w.CartId == cart.Id && cart.UserId == model.UserId).Select(s => new CartDetailsViewModel
+        //    //{
+        //    //    CartDetailsId = s.Id,
+        //    //    PhotoPath = s.ProductSize.Product.ProductImagePath,
+        //    //    ProductName = s.ProductSize.Product.Name,
+        //    //    Quantity = s.Quantity,
+        //    //    Price = s.ProductSize.Product.Price
+        //    //}).ToList();
+
+        //    return View(list);
+        //}
 
         public IActionResult ManView()
         {
@@ -80,7 +100,8 @@ namespace AppBoutiqueKids.Controllers
                 PhotoPath = product.ProductImagePath,
                 Brand = product.Brand.Name,
                 Category = product.Category.Name,
-                ProductSizes=selectLista
+                UserId = int.Parse(_userManager.GetUserId(HttpContext.User)),
+                ProductSizes = selectLista
             };
             return View(nameof(ProductDetails), model);
         }
@@ -89,6 +110,6 @@ namespace AppBoutiqueKids.Controllers
         {
             return View(_reposProduct.GetProducts());
         }
-        
+
     }
 }
