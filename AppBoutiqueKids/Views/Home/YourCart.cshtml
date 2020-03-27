@@ -54,16 +54,22 @@
                 </tbody>
             </table>
             <hr />
+            @*<p class="buttons center">
+                    <button class="btn" type="button">Update</button>
+                    <button class="btn" type="button">Continue</button>
+                    <button class="btn btn-inverse" type="submit" id="checkout">Checkout</button>
+                </p>*@
 
             @if (count > 0)
             {
-                @*<button class="btn" type="button">Update</button>*@
                 <form asp-controller="Home" asp-action="ConfirmOrder" method="post">
                     <input asp-for="@UserId" readonly style="visibility:hidden" />
                     <button class="btn btn-warning" type="submit">Confirm</button>
                 </form>
-                @*<button class="btn btn-inverse" type="submit" id="checkout">Checkout</button>*@
             }
+
+
+
         </div>
         <div class="span3 col">
             <div class="block">

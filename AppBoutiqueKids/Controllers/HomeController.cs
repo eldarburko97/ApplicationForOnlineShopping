@@ -54,6 +54,23 @@ namespace AppBoutiqueKids.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult YourCart()
+        {
+            int userId = int.Parse(_userManager.GetUserId(HttpContext.User));
+            var listOfCartDetails = _context.CartDetails.Where(cd => cd.UserId == userId).Select(s => new CartDetailsViewModel
+            {
+                CartDetailsId = s.Id,
+                PhotoPath = s.ProductSize.Product.ProductImagePath,
+                ProductName = s.ProductSize.Product.Name,
+                Quantity = s.Quantity,
+                Price = s.ProductSize.Product.Price
+            }).ToList();
+            ViewBag.UserId = userId;
+          //  ViewBag.count = listOfCartDetails.Count;
+            return View(listOfCartDetails);
+        }
+
         [HttpPost]
         public IActionResult Cart(ProductCartViewModel model)
         {
@@ -74,6 +91,9 @@ namespace AppBoutiqueKids.Controllers
                 Price = s.ProductSize.Product.Price
             }).ToList();
 
+            ViewBag.UserId = model.UserId;
+           // ViewBag.count = listOfCartDetails.Count;
+
             return View(listOfCartDetails);
         }
         public IActionResult DeleteCartDetails(int id)
@@ -90,6 +110,38 @@ namespace AppBoutiqueKids.Controllers
                 Price = s.ProductSize.Product.Price
             }).ToList());
         }
+
+
+        [HttpPost]
+        public IActionResult ConfirmOrder(int UserId)
+        {
+            Order order = new Order
+            {
+                OrderDate = DateTime.Now,
+                UserId = UserId
+            };
+
+            _context.Orders.Add(order);
+            _context.SaveChanges();
+            var listofCartDetails = _context.CartDetails.Where(cd=>cd.UserId==order.UserId).ToList();
+            foreach(var d in listofCartDetails)
+            {
+                OrderDetails orderDetails = new OrderDetails
+                {
+                    OrderId = order.Id,
+                    ProductSizeId = d.ProductSizeId
+                };
+                _context.OrderDetails.Add(orderDetails);
+                _context.SaveChanges();
+            }
+            foreach(var ld in listofCartDetails)
+            {
+                _reposCartDetails.DeleteCartDetail(ld.Id);
+            }
+
+            return RedirectToAction(nameof(ProductList));
+        }
+
         public IActionResult ManView()
         {
             return View();
