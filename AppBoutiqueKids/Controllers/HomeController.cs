@@ -19,12 +19,14 @@ namespace AppBoutiqueKids.Controllers
     public class HomeController : Controller
     {
         private IProduct _reposProduct;
+        private ICartDetails _reposCartDetails;
         private ApplicationDbContext _context;
         private UserManager<User> _userManager;
 
-        public HomeController(ApplicationDbContext context, IProduct reposProduct, UserManager<User> userManager)
+        public HomeController(ApplicationDbContext context, IProduct reposProduct,ICartDetails reposCartDetails, UserManager<User> userManager)
         {
             _reposProduct = reposProduct;
+            _reposCartDetails = reposCartDetails;
             _context = context;
             _userManager = userManager;
         }
@@ -52,28 +54,42 @@ namespace AppBoutiqueKids.Controllers
             return View();
         }
 
-        //[HttpPost]
-        //public IActionResult Cart(ProductCartViewModel model)
-        //{
-
+        [HttpPost]
+        public IActionResult Cart(ProductCartViewModel model)
+        {
+            CartDetails newCartDetail = new CartDetails
+            {
+                UserId = model.UserId,
+                Quantity = model.Quantity,
+                ProductSizeId = model.ProductSizeId
+            };
+            _reposCartDetails.Add(newCartDetail);
             
+            var listOfCartDetails = _context.CartDetails.Where(cd=>cd.UserId == model.UserId).Select(s => new CartDetailsViewModel
+            {
+                CartDetailsId = s.Id,
+                PhotoPath = s.ProductSize.Product.ProductImagePath,
+                ProductName = s.ProductSize.Product.Name,
+                Quantity = s.Quantity,
+                Price = s.ProductSize.Product.Price
+            }).ToList();
 
-            
-
-        //    // List<CartDetailsViewModel> list = new List<CartDetailsViewModel>();
-
-        //    //var list = _context.CartDetails.Where(w => w.CartId == cart.Id && cart.UserId == model.UserId).Select(s => new CartDetailsViewModel
-        //    //{
-        //    //    CartDetailsId = s.Id,
-        //    //    PhotoPath = s.ProductSize.Product.ProductImagePath,
-        //    //    ProductName = s.ProductSize.Product.Name,
-        //    //    Quantity = s.Quantity,
-        //    //    Price = s.ProductSize.Product.Price
-        //    //}).ToList();
-
-        //    return View(list);
-        //}
-
+            return View(listOfCartDetails);
+        }
+        public IActionResult DeleteCartDetails(int id)
+        {
+            var cartDetail = _reposCartDetails.GetCartDetail(id);
+            var userId = cartDetail.UserId;
+            _reposCartDetails.DeleteCartDetail(id);
+            return View(nameof(Cart), _context.CartDetails.Where(cd => cd.UserId == userId).Select(s => new CartDetailsViewModel
+            {
+                CartDetailsId = s.Id,
+                PhotoPath = s.ProductSize.Product.ProductImagePath,
+                ProductName = s.ProductSize.Product.Name,
+                Quantity = s.Quantity,
+                Price = s.ProductSize.Product.Price
+            }).ToList());
+        }
         public IActionResult ManView()
         {
             return View();

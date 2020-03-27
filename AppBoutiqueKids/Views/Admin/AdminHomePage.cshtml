@@ -23,19 +23,19 @@
 
         <div class="Size">
             <h1>Size</h1>
-            <button class="btn-warning" type="button" onclick="location.href='@Url.Action("AddSize","Admin")'">Add Size</button>
-            <button class="btn" type="button" onclick="location.href='@Url.Action("SizeList","Admin")'">Sizes</button>
+            @*<button class="btn-warning" type="button" onclick="location.href='@Url.Action("AddSize","Admin")'">Add Size</button>*@
+            <button class="btn btn-warning" type="button" onclick="location.href='@Url.Action("SizeList","Admin")'">Sizes</button>
         </div>
 
         <div class="Shipper">
             <h1>Shipper</h1>
-            <button class="btn-warning" type="button" onclick="location.href='@Url.Action("AddShipper","Admin")'">Add Shipper</button>
+            @*<button class="btn-warning" type="button" onclick="location.href='@Url.Action("AddShipper","Admin")'">Add Shipper</button>*@
             <a asp-controller="Admin" asp-action="ShippersList" class="btn btn-warning">Shippers</a>
         </div>
         <div class="Supplier">
             <h1>Supplier</h1>
-            <button class="btn-warning" type="button" onclick="location.href='@Url.Action("AddSupplier","Admin")'">Add Supplier></button>
-            <button class="btn" type="button" onclick="location.href='@Url.Action("SuppliersList","Admin")'">Suppliers</button>
+            @*<button class="btn-warning" type="button" onclick="location.href='@Url.Action("AddSupplier","Admin")'">Add Supplier></button>*@
+            <button class="btn btn-warning" type="button" onclick="location.href='@Url.Action("SuppliersList","Admin")'">Suppliers</button>
         </div>
     </div> 
 

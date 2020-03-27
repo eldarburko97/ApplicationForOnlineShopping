@@ -3,7 +3,20 @@
 <h1>Shippers List</h1>
 
 <div class="control-group">
-
+    <table class="table">
+        <tr>
+            <td>
+                <p>
+                    <a asp-controller="Admin" asp-action="AddShipper" class="btn btn-warning">Add Shipper</a>
+                </p>
+            </td>
+            <td>
+                <p>
+                    <a asp-controller="Admin" asp-action="AdminHomePage" class="btn btn-warning">Back</a>
+                </p>
+            </td>
+        </tr>
+    </table>
     <table class="table">
 
         <thead>
@@ -19,8 +32,8 @@
                 <tr>
                     <td>@item.Name</td>
                     <td>@item.PhoneNumber</td>
-                    <td><button class="btn" type="button"><a asp-controller="Admin" asp-action="DeleteShipper" asp-route-id="@item.Id">Delete</a></button></td>
-                    <td><button class="btn" type="button"><a asp-controller="Admin" asp-action="UpdateShipper" asp-route-id="@item.Id">Edit</a></button></td>
+                    <td><a class="btn btn-danger" asp-controller="Admin" asp-action="DeleteShipper" asp-route-id="@item.Id">Delete</a></td>
+                    <td><a class="btn btn-primary" asp-controller="Admin" asp-action="UpdateShipper" asp-route-id="@item.Id">Edit</a></td>
                 </tr>
             }
         </tbody>

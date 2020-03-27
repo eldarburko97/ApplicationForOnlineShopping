@@ -5,6 +5,21 @@
 <div class="control-group">
 
     <table class="table">
+        <tr>
+            <td>
+                <p>
+                    <a asp-controller="Admin" asp-action="AddSize" class="btn btn-warning">Add Size</a>
+                </p>
+            </td>
+            <td>
+                <p>
+                    <a asp-controller="Admin" asp-action="AdminHomePage" class="btn btn-warning">Back</a>
+                </p>
+            </td>
+        </tr>
+    </table>
+
+    <table class="table">
 
         <thead>
             <tr>
@@ -17,8 +32,8 @@
             {
                 <tr>
                     <td>@item.Name</td>
-                    <td><button class="btn" type="button"><a asp-controller="Admin" asp-action="DeleteSize" asp-route-id="@item.Id">Delete</a></button></td>
-                    <td><button class="btn" type="button"><a asp-controller="Admin" asp-action="UpdateSize" asp-route-id="@item.Id">Edit</a></button></td>
+                    <td><a class="btn btn-danger" asp-controller="Admin" asp-action="DeleteSize" asp-route-id="@item.Id">Delete</a></td>
+                    <td><a class="btn btn-primary" asp-controller="Admin" asp-action="UpdateSize" asp-route-id="@item.Id">Edit</a></td>
                 </tr>
             }
         </tbody>
