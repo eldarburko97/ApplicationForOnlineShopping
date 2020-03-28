@@ -7,7 +7,7 @@
     <div class="container">
 
         <div class="Product">
-            <h1>Product</h1>        
+            <h1>Product</h1>
             <a asp-controller="Home" asp-action="ProductList" class="btn btn-warning">Products</a>
         </div>
 
@@ -23,19 +23,20 @@
 
         <div class="Size">
             <h1>Size</h1>
-            @*<button class="btn-warning" type="button" onclick="location.href='@Url.Action("AddSize","Admin")'">Add Size</button>*@
             <button class="btn btn-warning" type="button" onclick="location.href='@Url.Action("SizeList","Admin")'">Sizes</button>
         </div>
 
         <div class="Shipper">
             <h1>Shipper</h1>
-            @*<button class="btn-warning" type="button" onclick="location.href='@Url.Action("AddShipper","Admin")'">Add Shipper</button>*@
             <a asp-controller="Admin" asp-action="ShippersList" class="btn btn-warning">Shippers</a>
         </div>
         <div class="Supplier">
             <h1>Supplier</h1>
-            @*<button class="btn-warning" type="button" onclick="location.href='@Url.Action("AddSupplier","Admin")'">Add Supplier></button>*@
             <button class="btn btn-warning" type="button" onclick="location.href='@Url.Action("SuppliersList","Admin")'">Suppliers</button>
+        </div>
+        <div class="Order">
+            <h1>Orders</h1>
+            <a asp-controller="Admin" asp-action="OrderList" class="btn btn-warning">Orders</a>
         </div>
     </div> 
 

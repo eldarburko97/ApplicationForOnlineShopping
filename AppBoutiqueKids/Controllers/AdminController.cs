@@ -29,6 +29,8 @@ namespace AppBoutiqueKids.Controllers
         private ICategory _reposCategory;
         private ISupplier _reposSupplier;
         private IProductSize _reposProductSize;
+        private IOrder _reposOrder;
+        private ApplicationDbContext _context;
         private readonly IUserData userData;
         private readonly UserManager<User> userManager;
         private readonly IHostingEnvironment _hostingEnvironment;
@@ -38,7 +40,8 @@ namespace AppBoutiqueKids.Controllers
             UserManager<User> userManager,IHostingEnvironment hostingEnvironment,
             ISize reposSize,IBrand reposBrand,
             IShipper reposShipper, IProduct reposProduct,
-            ICategory reposCategory,ISupplier reposSupplier,IProductSize reposProductSize)
+            ICategory reposCategory,ISupplier reposSupplier,IProductSize reposProductSize,
+            IOrder reposOrder,ApplicationDbContext context)
         {
             this.userData = userData;
             this.userManager = userManager;
@@ -50,6 +53,8 @@ namespace AppBoutiqueKids.Controllers
             _reposCategory = reposCategory;
             _reposSupplier = reposSupplier;
             _reposProductSize = reposProductSize;
+            _reposOrder = reposOrder;
+            _context = context;
         }
 
         [Authorize(Roles = Globals.Admin)]
@@ -457,6 +462,23 @@ namespace AppBoutiqueKids.Controllers
         {
             _reposShipper.UpdateShipper(model);
             return RedirectToAction(nameof(ShippersList));
+        }
+        public IActionResult OrderList()
+        {
+            var listOfOrders = _context.OrderDetails.Select(o => new OrderListViewModel{
+                Id=o.Id,
+                Product=o.ProductSize.Product.Name,
+                Size=o.ProductSize.Size.Name,
+                User=o.Order.User.UserName,
+                Email=o.Order.User.Email}).ToList();
+            return View(listOfOrders);
+        }
+        public IActionResult DeleteOrder(int id)
+        {
+            var deleteOrder = _context.OrderDetails.Find(id);
+            _context.OrderDetails.Remove(deleteOrder);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(OrderList));
         }
     }
 }
