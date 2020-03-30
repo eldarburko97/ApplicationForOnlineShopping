@@ -142,13 +142,15 @@ namespace AppBoutiqueKids.Controllers
             return RedirectToAction(nameof(ProductList));
         }
 
-        public IActionResult ManView()
+        public IActionResult WomansView()
         {
-            return View();
+            var listOfWomenProducts = _context.Products.Include(b=>b.Brand).Include(c=>c.Category).Where(p => p.Category.Name == "Female").ToList();
+            return View(listOfWomenProducts);
         }
-        public IActionResult WomanView()
+        public IActionResult MansView()
         {
-            return View();
+            var listOfMenProducts = _context.Products.Include(b => b.Brand).Include(c => c.Category).Where(p => p.Category.Name == "Male").ToList();
+            return View(listOfMenProducts);
         }
 
         public IActionResult ProductDetails(int id)
