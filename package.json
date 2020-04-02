@@ -1,0 +1,20 @@
+{
+  "name": "boutiquekids-app",
+  "version": "1.0.0",
+  "description": "TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://ahmedmuftic@dev.azure.com/ahmedmuftic/AppBoutiqueKids/_git/boutiquekids-app"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@microsoft/signalr": "^3.1.3",
+    "@types/node": "^13.11.0"
+  }
+}

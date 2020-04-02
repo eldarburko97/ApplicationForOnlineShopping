@@ -5,7 +5,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var PhotoPath = "~/images/" + Model.PhotoPath;
 }
-
+    <script>
+        let connection = new signalR.HubConnectionBuilder().withUrl("/deliverHub").build();
+        connection.on("RecieveUpdatedQuantity", (data) => {
+            document.getElementById("qty").textContent = data;
+        });
+        connection.start();
+    </script>
 <div class="row">
     <div class="span9 full">
         <div class="row">
@@ -72,17 +78,7 @@
     </div>
 </div>
 
-@section Scripts{
-        <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js">
 
-            let conn = new signalR.HubConnectionBuilder("https://localhost:44302/deliverHub")
-                .configureLogging(signalR.LogLevel.Information)
-                .build();
-            conn.start(() => console.log("websocket ukljucen").catch(() => console.log("Desila se grešska")));
-            conn.on("RecieveUpdatedQuantity", (data) => {
-                console.log(data);
-                $("#qty").val(data);
-            });
+  @*      <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>*@
 
-        </script>
-    }
+    

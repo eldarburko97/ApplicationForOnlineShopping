@@ -29,6 +29,17 @@
     <script src="~/js/superfish.js"></script>
     <script src="~/js/jquery.scrolltotop.js"></script>
     <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
+    @*<script>
+        let conn = new signalR.HubConnectionBuilder().withUrl("/deliverHub")
+            //.configureLogging(signalR.LogLevel.Information)
+            .build();
+        conn.on("RecieveUpdatedQuantity", (data) => {
+            console.log(data);
+            $("#qty").val(data);
+        });
+        conn.start().catch(() => console.log("Desila se grešska"));
+
+    </script>*@
     <!--[if lt IE 9]>
                 <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <script src="js/respond.min.js"></script>
