@@ -1,69 +1,88 @@
 ﻿@model AppBoutiqueKids.ViewModels.ProductCartViewModel
-
+@{}
 @{
     ViewData["Title"] = "Product Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var PhotoPath = "~/images/" + Model.PhotoPath;
 }
 
-    <div class="row">
-        <div class="span9 full">
-            <div class="row">
-                <div class="span4">
-                    <a href="themes/images/ladies/1.jpg" class="thumbnail" data-fancybox-group="group1" title="Description 1">
-                    <img alt="" src="@PhotoPath"  asp-append-version="true"></a>
-                </div>
-                <div class="span5">
-                    <address>
-                        <strong>Brand:</strong> <span>@Model.Brand</span><br>
-                        <strong>Category:</strong> <span>@Model.Category</span><br>
-                        <strong>Availability:</strong> <span>@(Model.Quantity < 0 ? "Out of stock" : Model.Quantity.ToString())</span><br>
-                    </address>
-                    <h4><strong>Price: $@Model.Price</strong></h4>
-                </div>
-                <div class="span5">
-                
-                    @if (User.IsInRole(Globals.Admin))
-                    {
-                        <a asp-controller="Admin" asp-action="UpdateProduct" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
-                        <a asp-controller="Admin" asp-action="DeleteProduct" asp-route-id="@Model.Id" class="btn btn-danger">Delete</a>
-                    }
-                    else
-                    {
-                        <form  method="post">
-                            <input asp-for="@Model.PhotoPath" style="visibility:hidden"/>
-                            <input asp-for="@Model.Id" style="visibility:hidden"/>
-                            <input asp-for="@Model.UserId" style="visibility:hidden"/>
-                            <label>Product name:</label><input asp-for="@Model.ProductName" readonly/><br />
-                            <label>Price:</label><input asp-for="@Model.Price" readonly/><br />
-                            <label>Qty:</label>
-                            <input type="text" class="span1" placeholder="1" asp-for="@Model.Quantity"><br />
-                            <label>Availability sizes:</label><select asp-for="@Model.ProductSizeId" asp-items="@Model.ProductSizes"></select><br />
-                            <button type="submit" class="btn btn-inverse" asp-controller="Home" asp-action="Cart">Add to cart</button>
-                        </form>
-                    }
-                </div></div><div class="row">
-                <div class="span12">
-                    <ul class="nav nav-tabs" id="myTab">
-                        <li class="active"><a href="#home">Description</a></li>
-                        @*<li class=""><a href="#profile">Additional Information</a></li>*@
-                    </ul>
-                    <div class="tab-content">
-                        <div class="tab-pane active" id="home">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem</div>
-                        <div class="tab-pane" id="profile">
-                            <table class="table table-striped shop_attributes">
-                                <tbody>
-                                    <tr class="">
-                                        <th>Size</th>
-                                        <td>Large, Medium, Small, X-Large</td>
-                                    </tr>
-                                    <tr class="alt">
-                                        <th>Colour</th>
-                                        <td>Orange, Yellow</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+<div class="row">
+    <div class="span9 full">
+        <div class="row">
+            <div class="span4">
+                <a href="themes/images/ladies/1.jpg" class="thumbnail" data-fancybox-group="group1" title="Description 1">
+                    <img alt="" src="@PhotoPath" asp-append-version="true">
+                </a>
+            </div>
+            <div class="span5">
+                <address>
+                    <strong>Brand:</strong> <span>@Model.Brand</span><br>
+                    <strong>Category:</strong> <span>@Model.Category</span><br>
+                    <strong>Availability:</strong> <span id="qty">@(Model.Quantity < 0 ? "Out of stock" : Model.Quantity.ToString())</span><br>
+                </address>
+                <h4><strong>Price: $@Model.Price</strong></h4>
+            </div>
+            <div class="span5">
+
+                @if (User.IsInRole(Globals.Admin))
+                {
+                    <a asp-controller="Admin" asp-action="UpdateProduct" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+                    <a asp-controller="Admin" asp-action="DeleteProduct" asp-route-id="@Model.Id" class="btn btn-danger">Delete</a>
+                }
+                else
+                {
+                    <form method="post">
+                        <input asp-for="@Model.PhotoPath" style="visibility:hidden" />
+                        <input asp-for="@Model.Id" style="visibility:hidden" />
+                        <input asp-for="@Model.UserId" style="visibility:hidden" />
+                        <label>Product name:</label><input asp-for="@Model.ProductName" readonly /><br />
+                        <label>Price:</label><input asp-for="@Model.Price" readonly /><br />
+                        <label>Qty:</label>
+                        <input type="text" class="span1" placeholder="1" asp-for="@Model.QuantityForBuy"><br />
+                        <label>Availability sizes:</label><select asp-for="@Model.ProductSizeId" asp-items="@Model.ProductSizes"></select><br />
+                        <button type="submit" class="btn btn-inverse" asp-controller="Home" asp-action="Cart">Add to cart</button>
+                    </form>
+                }
+            </div>
+        </div><div class="row">
+            <div class="span12">
+                <ul class="nav nav-tabs" id="myTab">
+                    <li class="active"><a href="#home">Description</a></li>
+                    @*<li class=""><a href="#profile">Additional Information</a></li>*@
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="home">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem</div>
+                    <div class="tab-pane" id="profile">
+                        <table class="table table-striped shop_attributes">
+                            <tbody>
+                                <tr class="">
+                                    <th>Size</th>
+                                    <td>Large, Medium, Small, X-Large</td>
+                                </tr>
+                                <tr class="alt">
+                                    <th>Colour</th>
+                                    <td>Orange, Yellow</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-            </div></div></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+        <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js">
+
+            let conn = new signalR.HubConnectionBuilder("https://localhost:44302/deliverHub")
+                .configureLogging(signalR.LogLevel.Information)
+                .build();
+            conn.start(() => console.log("websocket ukljucen").catch(() => console.log("Desila se grešska")));
+            conn.on("RecieveUpdatedQuantity", (data) => {
+                console.log(data);
+                $("#qty").val(data);
+            });
+
+        </script>
+    }

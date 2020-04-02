@@ -17,6 +17,8 @@ using AppBoutiqueKids.Models;
 using AppBoutiqueKids.Services;
 using AppBoutiqueKids.Repository;
 using AppBoutiqueKids.Helpers;
+using Microsoft.AspNetCore.SignalR;
+using AppBoutiqueKids.Hubs;
 
 namespace AppBoutiqueKids
 {
@@ -32,6 +34,14 @@ namespace AppBoutiqueKids
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+           
+            services.AddCors(options => options.AddPolicy("CorsPolicy",
+            builder =>
+            {
+                builder.AllowAnyMethod().AllowAnyHeader()
+                       .WithOrigins("https://localhost:44302")
+                       .AllowCredentials();
+            }));
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -62,6 +72,8 @@ namespace AppBoutiqueKids
             services.AddScoped<IProductSize, ProductSizeRepository>();
             services.AddScoped<ICartDetails, CartDetailsRepository>();
             services.AddScoped<IOrder, OrderRepostitory>();
+            services.AddSignalR();
+           // services.AddScoped<IHubContext, DeliverHub>();
             services.AddScoped<EmailSender, EmailSender>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
@@ -81,14 +93,22 @@ namespace AppBoutiqueKids
                 app.UseHsts();
             }
 
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-
+       
             app.UseAuthentication();
+
+            app.UseSignalR(config =>
+            {
+                config.MapHub<DeliverHub>("/deliverHub");
+            }
+            );
 
             app.UseMvc(routes =>
             {
+                
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");

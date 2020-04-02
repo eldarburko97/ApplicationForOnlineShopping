@@ -13,6 +13,7 @@ namespace AppBoutiqueKids.ViewModels
         public string Category { get; set; }
         public string ProductName { get; set; }
         public int Quantity { get; set; }
+        public int QuantityForBuy { get; set; }
         public decimal Price { get; set; }
         public string PhotoPath { get; set; }
         public int ProductSizeId { get; set; }

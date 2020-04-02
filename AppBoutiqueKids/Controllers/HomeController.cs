@@ -12,6 +12,9 @@ using AppBoutiqueKids.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Identity;
 using System;
+using Microsoft.AspNetCore.SignalR;
+using AppBoutiqueKids.Hubs;
+using System.Threading.Tasks;
 
 namespace AppBoutiqueKids.Controllers
 {
@@ -22,13 +25,14 @@ namespace AppBoutiqueKids.Controllers
         private ICartDetails _reposCartDetails;
         private ApplicationDbContext _context;
         private UserManager<User> _userManager;
-
-        public HomeController(ApplicationDbContext context, IProduct reposProduct,ICartDetails reposCartDetails, UserManager<User> userManager)
+        private IHubContext<DeliverHub> _hubContext;
+        public HomeController(IHubContext<DeliverHub> hub, ApplicationDbContext context, IProduct reposProduct,ICartDetails reposCartDetails, UserManager<User> userManager)
         {
             _reposProduct = reposProduct;
             _reposCartDetails = reposCartDetails;
             _context = context;
             _userManager = userManager;
+            _hubContext = hub;
         }
         public IActionResult Index()
         {
@@ -77,7 +81,7 @@ namespace AppBoutiqueKids.Controllers
             CartDetails newCartDetail = new CartDetails
             {
                 UserId = model.UserId,
-                Quantity = model.Quantity,
+                Quantity = model.QuantityForBuy,
                 ProductSizeId = model.ProductSizeId
             };
             _reposCartDetails.Add(newCartDetail);
@@ -113,7 +117,7 @@ namespace AppBoutiqueKids.Controllers
 
 
         [HttpPost]
-        public IActionResult ConfirmOrder(int UserId)
+        public async Task<IActionResult> ConfirmOrder(int UserId)
         {
             Order order = new Order
             {
@@ -133,11 +137,19 @@ namespace AppBoutiqueKids.Controllers
                 };
                 _context.OrderDetails.Add(orderDetails);
                 _context.SaveChanges();
+                var productId = _context.ProductSizes.Find(d.ProductSizeId);
+                var product = _context.Products.Find(productId.ProductId);
+                product.Quantity -= d.Quantity;
+                _context.Products.Update(product);
+                _context.SaveChanges();
+                    
+                await _hubContext.Clients.All.SendAsync("RecieveUpdatedQuantity", product.Quantity);
             }
             foreach(var ld in listofCartDetails)
             {
                 _reposCartDetails.DeleteCartDetail(ld.Id);
             }
+
 
             return RedirectToAction(nameof(ProductList));
         }
