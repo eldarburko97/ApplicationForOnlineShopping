@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AppBoutiqueKids.Data;
+using AppBoutiqueKids.Hubs;
 using AppBoutiqueKids.Models;
 using AppBoutiqueKids.Services;
 using AppBoutiqueKids.ViewModels;
@@ -13,6 +14,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
@@ -31,6 +33,7 @@ namespace AppBoutiqueKids.Controllers
         private IProductSize _reposProductSize;
         private IOrder _reposOrder;
         private ApplicationDbContext _context;
+        private IHubContext<NotificationsHub> _hubContext;
         private readonly IUserData userData;
         private readonly UserManager<User> userManager;
         private readonly IHostingEnvironment _hostingEnvironment;
@@ -41,7 +44,7 @@ namespace AppBoutiqueKids.Controllers
             ISize reposSize,IBrand reposBrand,
             IShipper reposShipper, IProduct reposProduct,
             ICategory reposCategory,ISupplier reposSupplier,IProductSize reposProductSize,
-            IOrder reposOrder,ApplicationDbContext context)
+            IOrder reposOrder,ApplicationDbContext context, Microsoft.AspNetCore.SignalR.IHubContext<NotificationsHub> hubContext)
         {
             this.userData = userData;
             this.userManager = userManager;
@@ -55,6 +58,7 @@ namespace AppBoutiqueKids.Controllers
             _reposProductSize = reposProductSize;
             _reposOrder = reposOrder;
             _context = context;
+            _hubContext = hubContext;
         }
 
         [Authorize(Roles = Globals.Admin)]
@@ -473,11 +477,17 @@ namespace AppBoutiqueKids.Controllers
                 Email=o.Order.User.Email}).ToList();
             return View(listOfOrders);
         }
-        public IActionResult DeleteOrder(int id)
+        public async Task< IActionResult> DeleteOrder(int id)
         {
             var deleteOrder = _context.OrderDetails.Find(id);
             _context.OrderDetails.Remove(deleteOrder);
             _context.SaveChanges();
+            var order = _context.Orders.Find(deleteOrder.OrderId);
+
+            //var user = _context.Users.Find(order.UserId);
+
+            //await _hubContext.Clients.User(user.Id.ToString()).SendAsync("ReceiveMessage", "Vaša narudžba je isporučena!!");
+            
             return RedirectToAction(nameof(OrderList));
         }
     }

@@ -3,6 +3,8 @@
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
 
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,6 +24,9 @@
     <link href="~/css/main.css" rel="stylesheet" />
 
     <link href="~/css/product.css" rel="stylesheet" />
+   
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <!-- scripts -->
     <script src="~/js/jquery-1.7.2.min.js"></script>
@@ -29,17 +34,7 @@
     <script src="~/js/superfish.js"></script>
     <script src="~/js/jquery.scrolltotop.js"></script>
     <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
-    @*<script>
-        let conn = new signalR.HubConnectionBuilder().withUrl("/deliverHub")
-            //.configureLogging(signalR.LogLevel.Information)
-            .build();
-        conn.on("RecieveUpdatedQuantity", (data) => {
-            console.log(data);
-            $("#qty").val(data);
-        });
-        conn.start().catch(() => console.log("Desila se grešska"));
-
-    </script>*@
+    
     <!--[if lt IE 9]>
                 <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <script src="js/respond.min.js"></script>
@@ -69,16 +64,27 @@
                         {
                             <li><a href="/Identity/Account/Register">Register</a></li>
                             <li><a href="/Identity/Account/Login">Login</a></li>
+
+
+
                         }
                         else
-                        {
-                            <li><a asp-action="YourCart" asp-controller="Home">Your Cart</a></li>
+                        {                                                 
+                            <li>
+                                <a asp-action="YourCart" asp-controller="Home">
+                                    <i class="fa fa-shopping-cart" style="font-size:20px"></i>
+                                </a>
+                       
+                        
+                        <span id="cart_count">0</span></li>
                             <li><a href="checkout.html">Checkout</a></li>
                             <li><a href="#">@User.Identity.Name</a></li>
-                            <li><form  asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm">
+                            <li>
+                                <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm">
                                     Logout
-                                <input type="submit" value="Logout"/>   
-                                </form> </li>
+                                    <input type="submit" value="Logout" />
+                                </form>
+                            </li>
                         }
                     </ul>
                 </div>
@@ -189,9 +195,11 @@
     </div>
     <script src="~/js/common.js"></script>
     <script src="~/js/jquery.flexslider-min.js"></script>
+    @RenderSection("Scripts", required: false)
+
     <script type="text/javascript">
         $(function () {
-            $(document).ready(function () {
+            $(document).ready(() => {
                 $('.flexslider').flexslider({
                     animation: "fade",
                     slideshowSpeed: 4000,
@@ -201,8 +209,22 @@
                     controlsContainer: ".flex-container" // the container that holds the flexslider
                 });
             });
+
+            let signedin = "@SignInManager.IsSignedIn(User)";
+            let userId = "@UserManager.GetUserId(User)";
+         
+
+
+            if (signedin == "True") {
+                $.ajax({
+                    method: "GET",
+                     url: `/Home/GetCartCount/${userId}`,
+                    success: (data) => {
+                        $("#cart_count").html(data);
+                    }
+                });
+            }
         });
     </script>
-    @RenderSection("Scripts", required: false)
 </body>
 </html>

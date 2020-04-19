@@ -23,7 +23,7 @@
                 <td>@item.Email</td>
                 <td>@item.Product</td>
                 <td>@item.Size</td>
-                <td><a class="btn btn-warning" asp-controller="Admin" asp-action="DeleteOrder" asp-route-id="@item.Id">Deliver</a></td>
+                <td><a id="message" class="btn btn-warning" asp-controller="Admin" asp-action="DeleteOrder" asp-route-id="@item.Id">Deliver</a></td>
             </tr>
         }
     </tbody>

@@ -5,13 +5,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var PhotoPath = "~/images/" + Model.PhotoPath;
 }
-    <script>
-        let connection = new signalR.HubConnectionBuilder().withUrl("/deliverHub").build();
-        connection.on("RecieveUpdatedQuantity", (data) => {
-            document.getElementById("qty").textContent = data;
-        });
-        connection.start();
-    </script>
+<script>
+    let connection = new signalR.HubConnectionBuilder().withUrl("/deliverHub").build();
+    connection.on("RecieveUpdatedQuantity", (data) => {
+        document.getElementById("qty").textContent = data;
+    });
+    connection.start();
+</script>
 <div class="row">
     <div class="span9 full">
         <div class="row">
@@ -37,7 +37,7 @@
                 }
                 else
                 {
-                    <form method="post">
+                    <form method="post" id="add-to-cart">
                         <input asp-for="@Model.PhotoPath" style="visibility:hidden" />
                         <input asp-for="@Model.Id" style="visibility:hidden" />
                         <input asp-for="@Model.UserId" style="visibility:hidden" />
@@ -46,7 +46,7 @@
                         <label>Qty:</label>
                         <input type="text" class="span1" placeholder="1" asp-for="@Model.QuantityForBuy"><br />
                         <label>Availability sizes:</label><select asp-for="@Model.ProductSizeId" asp-items="@Model.ProductSizes"></select><br />
-                        <button type="submit" class="btn btn-inverse" asp-controller="Home" asp-action="Cart">Add to cart</button>
+                        <input type="submit" class="btn btn-inverse" value="Add to cart" />
                     </form>
                 }
             </div>
@@ -78,7 +78,34 @@
     </div>
 </div>
 
+@section Scripts{
+    <script>
+        $(document).ready(() => {
+            var connectionCart = new signalR.HubConnectionBuilder().withUrl("/cart").build();
+            connectionCart.on("UpdateCart", (count) => {               
+                document.getElementById("cart_count").innerHTML = count;
 
-  @*      <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>*@
+            });
 
-    
+            connectionCart.start().then(() => {
+                $('body').on("submit", "#add-to-cart", (ev) => {
+                    ev.preventDefault();
+
+                    $.ajax({
+                        url: '/Home/AddToCart',
+                        type: 'POST',
+                        data: $(ev.target).serialize(),
+                        success: (data) => {
+                            let count = $('#cart_count').html();
+                            connectionCart.invoke("AddToCartMethod", count).catch(err => console.error(err));
+                        },
+                        error: (err) => console.error(err)
+                    });
+                });
+            }).catch(err => console.error(err));
+        });
+    </script>
+}
+
+
+

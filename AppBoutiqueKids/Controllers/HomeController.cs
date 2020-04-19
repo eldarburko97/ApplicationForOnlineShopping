@@ -26,14 +26,23 @@ namespace AppBoutiqueKids.Controllers
         private ApplicationDbContext _context;
         private UserManager<User> _userManager;
         private IHubContext<DeliverHub> _hubContext;
-        public HomeController(IHubContext<DeliverHub> hub, ApplicationDbContext context, IProduct reposProduct,ICartDetails reposCartDetails, UserManager<User> userManager)
+        private IHubContext<NotificationsHub> _cartHubContext;
+        public HomeController(IHubContext<DeliverHub> hub,
+            IHubContext<NotificationsHub> cartHubContext,
+            ApplicationDbContext context, 
+            IProduct reposProduct, 
+            ICartDetails reposCartDetails, 
+            UserManager<User> userManager
+            )
         {
             _reposProduct = reposProduct;
             _reposCartDetails = reposCartDetails;
             _context = context;
             _userManager = userManager;
             _hubContext = hub;
+            _cartHubContext = cartHubContext;
         }
+
         public IActionResult Index()
         {
             if (User.Claims.Any(x => x.Type == ClaimTypes.Role && x.Value == "ADMIN"))
@@ -71,7 +80,7 @@ namespace AppBoutiqueKids.Controllers
                 Price = s.ProductSize.Product.Price
             }).ToList();
             ViewBag.UserId = userId;
-          //  ViewBag.count = listOfCartDetails.Count;
+            //  ViewBag.count = listOfCartDetails.Count;
             return View(listOfCartDetails);
         }
 
@@ -85,8 +94,8 @@ namespace AppBoutiqueKids.Controllers
                 ProductSizeId = model.ProductSizeId
             };
             _reposCartDetails.Add(newCartDetail);
-            
-            var listOfCartDetails = _context.CartDetails.Where(cd=>cd.UserId == model.UserId).Select(s => new CartDetailsViewModel
+
+            var listOfCartDetails = _context.CartDetails.Where(cd => cd.UserId == model.UserId).Select(s => new CartDetailsViewModel
             {
                 CartDetailsId = s.Id,
                 PhotoPath = s.ProductSize.Product.ProductImagePath,
@@ -96,10 +105,47 @@ namespace AppBoutiqueKids.Controllers
             }).ToList();
 
             ViewBag.UserId = model.UserId;
-           // ViewBag.count = listOfCartDetails.Count;
+            // ViewBag.count = listOfCartDetails.Count;
 
             return View(listOfCartDetails);
         }
+
+        [HttpPost]
+        public IActionResult AddToCart(ProductCartViewModel model)
+        {
+            CartDetails newCartDetail = new CartDetails
+            {
+                UserId = model.UserId,
+                Quantity = model.QuantityForBuy,
+                ProductSizeId = model.ProductSizeId
+            };
+            _reposCartDetails.Add(newCartDetail);
+
+            //var listOfCartDetails = _context.CartDetails.Where(cd => cd.UserId == model.UserId).Select(s => new CartDetailsViewModel
+            //{
+            //    CartDetailsId = s.Id,
+            //    PhotoPath = s.ProductSize.Product.ProductImagePath,
+            //    ProductName = s.ProductSize.Product.Name,
+            //    Quantity = s.Quantity,
+            //    Price = s.ProductSize.Product.Price
+            //}).ToList();
+
+            //ViewBag.UserId = model.UserId;            
+            // ViewBag.count = listOfCartDetails.Count;
+
+            return Ok();
+        }
+
+        [HttpGet]
+        public IActionResult GetCartCount(int Id)
+        {
+            // get total cart count for userId in CartService
+
+            int count = _context.CartDetails.Where(w => w.UserId == Id).Count();
+
+            return Ok(count);
+        }
+
         public IActionResult DeleteCartDetails(int id)
         {
             var cartDetail = _reposCartDetails.GetCartDetail(id);
@@ -127,8 +173,8 @@ namespace AppBoutiqueKids.Controllers
 
             _context.Orders.Add(order);
             _context.SaveChanges();
-            var listofCartDetails = _context.CartDetails.Where(cd=>cd.UserId==order.UserId).ToList();
-            foreach(var d in listofCartDetails)
+            var listofCartDetails = _context.CartDetails.Where(cd => cd.UserId == order.UserId).ToList();
+            foreach (var d in listofCartDetails)
             {
                 OrderDetails orderDetails = new OrderDetails
                 {
@@ -142,10 +188,10 @@ namespace AppBoutiqueKids.Controllers
                 product.Quantity -= d.Quantity;
                 _context.Products.Update(product);
                 _context.SaveChanges();
-                    
+
                 await _hubContext.Clients.All.SendAsync("RecieveUpdatedQuantity", product.Quantity);
             }
-            foreach(var ld in listofCartDetails)
+            foreach (var ld in listofCartDetails)
             {
                 _reposCartDetails.DeleteCartDetail(ld.Id);
             }
@@ -156,7 +202,7 @@ namespace AppBoutiqueKids.Controllers
 
         public IActionResult WomansView()
         {
-            var listOfWomenProducts = _context.Products.Include(b=>b.Brand).Include(c=>c.Category).Where(p => p.Category.Name == "Female").ToList();
+            var listOfWomenProducts = _context.Products.Include(b => b.Brand).Include(c => c.Category).Where(p => p.Category.Name == "Female").ToList();
             return View(listOfWomenProducts);
         }
         public IActionResult MansView()
@@ -191,6 +237,11 @@ namespace AppBoutiqueKids.Controllers
         public IActionResult ProductList()
         {
             return View(_reposProduct.GetProducts());
+        }
+
+        public IActionResult Messages()
+        {
+            return View();
         }
 
     }
