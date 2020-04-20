@@ -17,7 +17,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
-
+using X.PagedList;
 
 namespace AppBoutiqueKids.Controllers
 {
@@ -467,7 +467,7 @@ namespace AppBoutiqueKids.Controllers
             _reposShipper.UpdateShipper(model);
             return RedirectToAction(nameof(ShippersList));
         }
-        public IActionResult OrderList()
+        public IActionResult OrderList(int ? page)
         {
             var listOfOrders = _context.OrderDetails.Select(o => new OrderListViewModel{
                 Id=o.Id,
@@ -475,19 +475,19 @@ namespace AppBoutiqueKids.Controllers
                 Size=o.ProductSize.Size.Name,
                 User=o.Order.User.UserName,
                 Email=o.Order.User.Email}).ToList();
-            return View(listOfOrders);
+
+            IPagedList<OrderListViewModel> list = listOfOrders.ToPagedList(page ?? 1, 6);
+            return View(list);
         }
-        public async Task< IActionResult> DeleteOrder(int id)
+        public IActionResult DeleteOrder(int id)
         {
             var deleteOrder = _context.OrderDetails.Find(id);
             _context.OrderDetails.Remove(deleteOrder);
             _context.SaveChanges();
             var order = _context.Orders.Find(deleteOrder.OrderId);
 
-            //var user = _context.Users.Find(order.UserId);
-
-            //await _hubContext.Clients.User(user.Id.ToString()).SendAsync("ReceiveMessage", "Vaša narudžba je isporučena!!");
             
+   
             return RedirectToAction(nameof(OrderList));
         }
     }

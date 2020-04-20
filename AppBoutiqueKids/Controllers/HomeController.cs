@@ -94,7 +94,7 @@ namespace AppBoutiqueKids.Controllers
                 ProductSizeId = model.ProductSizeId
             };
             _reposCartDetails.Add(newCartDetail);
-
+             
             var listOfCartDetails = _context.CartDetails.Where(cd => cd.UserId == model.UserId).Select(s => new CartDetailsViewModel
             {
                 CartDetailsId = s.Id,
@@ -104,9 +104,8 @@ namespace AppBoutiqueKids.Controllers
                 Price = s.ProductSize.Product.Price
             }).ToList();
 
-            ViewBag.UserId = model.UserId;
-            // ViewBag.count = listOfCartDetails.Count;
-
+            //ViewBag.UserId = model.UserId;
+            ViewData["userId"] = newCartDetail.UserId;
             return View(listOfCartDetails);
         }
 
@@ -121,17 +120,9 @@ namespace AppBoutiqueKids.Controllers
             };
             _reposCartDetails.Add(newCartDetail);
 
-            //var listOfCartDetails = _context.CartDetails.Where(cd => cd.UserId == model.UserId).Select(s => new CartDetailsViewModel
-            //{
-            //    CartDetailsId = s.Id,
-            //    PhotoPath = s.ProductSize.Product.ProductImagePath,
-            //    ProductName = s.ProductSize.Product.Name,
-            //    Quantity = s.Quantity,
-            //    Price = s.ProductSize.Product.Price
-            //}).ToList();
+            
 
             //ViewBag.UserId = model.UserId;            
-            // ViewBag.count = listOfCartDetails.Count;
 
             return Ok();
         }
@@ -150,6 +141,7 @@ namespace AppBoutiqueKids.Controllers
         {
             var cartDetail = _reposCartDetails.GetCartDetail(id);
             var userId = cartDetail.UserId;
+            ViewData["userId"] = userId;
             _reposCartDetails.DeleteCartDetail(id);
             return View(nameof(Cart), _context.CartDetails.Where(cd => cd.UserId == userId).Select(s => new CartDetailsViewModel
             {
@@ -158,6 +150,7 @@ namespace AppBoutiqueKids.Controllers
                 ProductName = s.ProductSize.Product.Name,
                 Quantity = s.Quantity,
                 Price = s.ProductSize.Product.Price
+                
             }).ToList());
         }
 

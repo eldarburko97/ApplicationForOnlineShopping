@@ -3,14 +3,13 @@
     ViewData["Title"] = "Cart";
     decimal total = 0;
     decimal subTotal = 0;
-    int UserId = ViewBag.UserId;
+    int UserId = (int) ViewData["userId"];
     int count = Model.Count;
 }
 
 
 
 <section class="header_text sub">
-    @*<img class="pageBanner" src="themes/images/pageBanner.png" alt="New products">*@
     <h4><span>Shopping Cart</span></h4>
 </section>
 <section class="main-content">
@@ -34,7 +33,6 @@
                         subTotal += item.Price * item.Quantity;
                         total = item.Price * item.Quantity;
                         <tr>
-                            @*<td><input type="checkbox" value="option1"></td>*@
                             <td><a class="btn btn-warning" asp-controller="Home" asp-action="DeleteCartDetails" asp-route-id="@item.CartDetailsId">Remove</a></td>
                             <td><img alt="" src="~/images/@item.PhotoPath" style="width:50px;height:50px;"></td>
                             <td>@item.ProductName</td>
@@ -57,12 +55,10 @@
 
             @if (count > 0)
             {
-                @*<button class="btn" type="button">Update</button>*@
                 <form asp-controller="Home" asp-action="ConfirmOrder" method="post">
                     <input asp-for="@UserId" readonly style="visibility:hidden" />
                     <button class="btn btn-warning" type="submit">Confirm</button>
                 </form>
-                @*<button class="btn btn-inverse" type="submit" id="checkout">Checkout</button>*@
             }
         </div>
         <div class="span3 col">

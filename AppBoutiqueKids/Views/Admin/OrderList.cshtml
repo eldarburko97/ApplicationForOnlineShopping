@@ -1,32 +1,43 @@
-﻿@model  List<OrderListViewModel>
+﻿@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+@using AppBoutiqueKids.ViewModels;
+@using System.Web;
+@model  IPagedList<OrderListViewModel>
 @{
     ViewData["Title"] = "OrderList";
 }
 
-<h1>List of orders</h1>
+    <div id="content">
+        <h1>List of orders</h1>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Buyer</th>
-            <th>Email</th>
-            <th>Product</th>
-            <th>Size</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.User</td>
-                <td>@item.Email</td>
-                <td>@item.Product</td>
-                <td>@item.Size</td>
-                <td><a id="message" class="btn btn-warning" asp-controller="Admin" asp-action="DeleteOrder" asp-route-id="@item.Id">Deliver</a></td>
-            </tr>
-        }
-    </tbody>
-</table>
-<a class="btn btn-warning" asp-controller="Admin" asp-action="AdminHomePage">Back to homepage</a>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Buyer</th>
+                    <th>Email</th>
+                    <th>Product</th>
+                    <th>Size</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.User</td>
+                        <td>@item.Email</td>
+                        <td>@item.Product</td>
+                        <td>@item.Size</td>
+                        <td><a id="message" class="btn btn-warning" asp-controller="Admin" asp-action="DeleteOrder" asp-route-id="@item.Id">Deliver</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div id="paging" style="text-align:start;display:inline-block">
+            @Html.PagedListPager(Model, page => Url.Action("OrderList", new { page, Model[0].Id }))
+
+        </div>
+        <a class="btn btn-warning" asp-controller="Admin" asp-action="AdminHomePage">Back to homepage</a>
+    </div>
+
 
