@@ -70,12 +70,12 @@ namespace AppBoutiqueKids
             services.AddScoped<IBrand, BrandRepository>();
             services.AddScoped<IShipper, ShipperRepository>();
             services.AddScoped<IProductSize, ProductSizeRepository>();
-            //services.AddTransient<ICartDetails, CartDetailsRepository>();
+            
             services.AddScoped<ICartDetails, CartDetailsRepository>();
             services.AddScoped<IOrder, OrderRepostitory>();
             services.AddSignalR();
-       
-            services.AddScoped<EmailSender, EmailSender>();
+            services.AddCloudscribePagination();
+            
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 

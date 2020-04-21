@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using X.PagedList;
+using cloudscribe.Pagination.Models;
 
 namespace AppBoutiqueKids.Controllers
 {
@@ -467,16 +468,18 @@ namespace AppBoutiqueKids.Controllers
             _reposShipper.UpdateShipper(model);
             return RedirectToAction(nameof(ShippersList));
         }
-        public IActionResult OrderList(int ? page)
+        public IActionResult OrderList(int? pageNumber=null)
         {
-            var listOfOrders = _context.OrderDetails.Select(o => new OrderListViewModel{
-                Id=o.Id,
-                Product=o.ProductSize.Product.Name,
-                Size=o.ProductSize.Size.Name,
-                User=o.Order.User.UserName,
-                Email=o.Order.User.Email}).ToList();
+            
+            var listOfOrders = _context.OrderDetails.Select(o => new OrderListViewModel {
+                Id = o.Id,
+                Product = o.ProductSize.Product.Name,
+                Size = o.ProductSize.Size.Name,
+                User = o.Order.User.UserName,
+                Email = o.Order.User.Email }).ToList();
 
-            IPagedList<OrderListViewModel> list = listOfOrders.ToPagedList(page ?? 1, 6);
+            IPagedList<OrderListViewModel> list = listOfOrders.ToPagedList(pageNumber ?? 1, 6);
+            
             return View(list);
         }
         public IActionResult DeleteOrder(int id)
