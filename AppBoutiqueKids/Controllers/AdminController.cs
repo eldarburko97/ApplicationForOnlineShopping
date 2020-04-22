@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,7 +17,7 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using X.PagedList;
-using cloudscribe.Pagination.Models;
+
 
 namespace AppBoutiqueKids.Controllers
 {
@@ -33,6 +32,7 @@ namespace AppBoutiqueKids.Controllers
         private ISupplier _reposSupplier;
         private IProductSize _reposProductSize;
         private IOrder _reposOrder;
+        private IOrderDetails _reposOrderDetails;
         private ApplicationDbContext _context;
         private IHubContext<NotificationsHub> _hubContext;
         private readonly IUserData userData;
@@ -44,7 +44,7 @@ namespace AppBoutiqueKids.Controllers
             UserManager<User> userManager,IHostingEnvironment hostingEnvironment,
             ISize reposSize,IBrand reposBrand,
             IShipper reposShipper, IProduct reposProduct,
-            ICategory reposCategory,ISupplier reposSupplier,IProductSize reposProductSize,
+            ICategory reposCategory,ISupplier reposSupplier,IProductSize reposProductSize,IOrderDetails reposOrderDetails,
             IOrder reposOrder,ApplicationDbContext context, Microsoft.AspNetCore.SignalR.IHubContext<NotificationsHub> hubContext)
         {
             this.userData = userData;
@@ -58,18 +58,19 @@ namespace AppBoutiqueKids.Controllers
             _reposSupplier = reposSupplier;
             _reposProductSize = reposProductSize;
             _reposOrder = reposOrder;
+            _reposOrderDetails = reposOrderDetails;
             _context = context;
             _hubContext = hubContext;
         }
 
         [Authorize(Roles = Globals.Admin)]
-        public IActionResult AdminHomePage() //Dashboard
+        public IActionResult AdminHomePage() 
         {
             return View();
         }
 
-        //[HttpPost]
-        public async Task<IActionResult> AddToRole(int id) // UserID 
+        
+        public async Task<IActionResult> AddToRole(int id) 
         {
             User user = userData.Get(id);
             if (await userManager.IsInRoleAsync(user, Globals.Admin))
@@ -84,11 +85,7 @@ namespace AppBoutiqueKids.Controllers
         public IActionResult AddProduct()
         {
             ProductInputVM vm = new ProductInputVM();
-           // List<Brand> brands = new List<Brand>();
-            // List<Category> categories = new List<Category>();
-
-            // brands = _context.Brands.ToList();
-            // categories = _context.Categories.ToList();
+          
            var brands = _reposBrand.GetBrands();
            var categories = _reposCategory.GetCategories();
 
@@ -142,24 +139,18 @@ namespace AppBoutiqueKids.Controllers
 
         public IActionResult DeleteProduct(int Id)
         {
-          //  Product product = _context.Products.FirstOrDefault(p => p.Id == Id);
             _reposProduct.DeleteProduct(Id);
-          //  _context.Products.Remove(product);
-          //  _context.SaveChanges();
-
             return RedirectToAction("ProductList", "Home");
         }
 
         public IActionResult UpdateProduct(int Id)
         {
             ProductInputVM vm = new ProductInputVM();
-            //List<Brand> brands = new List<Brand>();
-            // List<Category> categories = new List<Category>();
-            //Product product = new Product();
+            
             var product = _reposProduct.GetProduct(Id);
 
             var brands=_reposBrand.GetBrands();
-            //  categories = _context.Categories.ToList();
+            
            var categories = _reposCategory.GetCategories();
             vm.Id = product.Id;
             vm.Name = product.Name;
@@ -179,7 +170,7 @@ namespace AppBoutiqueKids.Controllers
         {
             if (ModelState.IsValid)
             {
-                //  Product product = _context.Products.FirstOrDefault(p => p.Id == vm.Id);
+                
                 Product product = _reposProduct.GetProduct(vm.Id);
                 product.Name = vm.Name;
                 product.Price = vm.Price;
@@ -219,17 +210,7 @@ namespace AppBoutiqueKids.Controllers
                         product.ProductImagePath = null;
                 }
 
-                //if(vm.Photo==null)
-                // {
-                //     if(vm.ExistingPhotoPath==null)
-                //     {
-                //         product.ProductImagePath = null;
-                //     }
-                // }
-
-
-                //  _context.Products.Update(product);
-                //  _context.SaveChanges();
+                
                 _reposProduct.UpdateProduct(product);
                 return RedirectToAction("ProductList","Home");
             }
@@ -484,13 +465,7 @@ namespace AppBoutiqueKids.Controllers
         }
         public IActionResult DeleteOrder(int id)
         {
-            var deleteOrder = _context.OrderDetails.Find(id);
-            _context.OrderDetails.Remove(deleteOrder);
-            _context.SaveChanges();
-            var order = _context.Orders.Find(deleteOrder.OrderId);
-
-            
-   
+            _reposOrderDetails.DeleteOrderDetail(id);
             return RedirectToAction(nameof(OrderList));
         }
     }

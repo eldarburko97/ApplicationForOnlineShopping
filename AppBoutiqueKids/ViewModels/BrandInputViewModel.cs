@@ -13,6 +13,7 @@ namespace AppBoutiqueKids.ViewModels
         public int Id { get; set; }
         [Required]
         [Column(TypeName = "nvarchar(50)")]
+        [MinLength(2)]
         public string Name { get; set; }
         public IFormFile Photo { get; set; }
     }

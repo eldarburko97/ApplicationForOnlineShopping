@@ -70,7 +70,7 @@ namespace AppBoutiqueKids
             services.AddScoped<IBrand, BrandRepository>();
             services.AddScoped<IShipper, ShipperRepository>();
             services.AddScoped<IProductSize, ProductSizeRepository>();
-            
+            services.AddScoped<IOrderDetails, OrderDetailsRepository>();
             services.AddScoped<ICartDetails, CartDetailsRepository>();
             services.AddScoped<IOrder, OrderRepostitory>();
             services.AddSignalR();

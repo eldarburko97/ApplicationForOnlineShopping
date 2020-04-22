@@ -18,7 +18,6 @@ using System.Threading.Tasks;
 
 namespace AppBoutiqueKids.Controllers
 {
-    //[Authorize(Roles =Globals.Member)]
     public class HomeController : Controller
     {
         private IProduct _reposProduct;
@@ -49,7 +48,7 @@ namespace AppBoutiqueKids.Controllers
             {
                 return RedirectToAction("AdminHomePage", "Admin");
             }
-            return RedirectToAction("ProductList");
+            return RedirectToAction(nameof(ProductList));
         }
 
         public IActionResult Privacy()
@@ -80,7 +79,6 @@ namespace AppBoutiqueKids.Controllers
                 Price = s.ProductSize.Product.Price
             }).ToList();
             ViewBag.UserId = userId;
-            //  ViewBag.count = listOfCartDetails.Count;
             return View(listOfCartDetails);
         }
 
@@ -104,7 +102,6 @@ namespace AppBoutiqueKids.Controllers
                 Price = s.ProductSize.Product.Price
             }).ToList();
 
-            //ViewBag.UserId = model.UserId;
             ViewData["userId"] = newCartDetail.UserId;
             return View(listOfCartDetails);
         }
@@ -119,10 +116,6 @@ namespace AppBoutiqueKids.Controllers
                 ProductSizeId = model.ProductSizeId
             };
             _reposCartDetails.Add(newCartDetail);
-
-            
-
-            //ViewBag.UserId = model.UserId;            
 
             return Ok();
         }
@@ -231,11 +224,5 @@ namespace AppBoutiqueKids.Controllers
         {
             return View(_reposProduct.GetProducts());
         }
-
-        public IActionResult Messages()
-        {
-            return View();
-        }
-
     }
 }
