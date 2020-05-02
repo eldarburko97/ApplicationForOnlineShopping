@@ -13,14 +13,14 @@
                 <fieldset>
                     <div class="control-group">
                         <label asp-for="Name">Name:</label>
-                        <input asp-for="Name" class="form-control" /><br />
+                        <input asp-for="Name" type="text" class="form-control"/><br />
                         <span asp-validation-for="Name" class="text-danger"></span>
                         <label>Photo:</label>
                         <input type="file" asp-for="Photo" class="custom-file"/>
                         <label class="custom-file-label">Choose file...</label><br />
                     </div>
 
-                    <div class="actions"><input tabindex="9" class="btn btn-warning" type="submit" value="Add"></div>
+                    <div class="actions"><input tabindex="9" class="btn btn-warning" type="submit" value="Add Brand"></div>
                 </fieldset>
 
 

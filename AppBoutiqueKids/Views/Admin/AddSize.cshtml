@@ -1,4 +1,4 @@
-﻿
+﻿@model SizeInputVM
 @{
     ViewData["Title"] = "AddSize";
 }
@@ -6,9 +6,9 @@
 <h1>Add size</h1>
 <form action="AddSize" method="post">
     <div>
-        <input type="text" name="Name" placeholder="Name" />
-
+        <input asp-for="Name" type="text" placeholder="Name" />
+        <span asp-validation-for="Name" class="text-danger"></span>
     </div>
-    <button class="btn btn-warning">Add</button>
+    <button class="btn btn-warning">Add Size</button>
 </form>
 

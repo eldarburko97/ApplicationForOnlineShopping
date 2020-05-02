@@ -352,7 +352,7 @@ namespace AppBoutiqueKids.Controllers
                 _reposBrand.AddBrand(newBrand);
                 return RedirectToAction(nameof(BrandList));
             }
-            return RedirectToAction(nameof(AdminHomePage));
+            return RedirectToAction(nameof(AddBrand));
         }
         public IActionResult BrandList()
         {
@@ -387,10 +387,18 @@ namespace AppBoutiqueKids.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddSize(Size model)
+        public IActionResult AddSize(SizeInputVM model)
         {
-            _reposSize.AddSize(model);
-            return RedirectToAction(nameof(SizeList));
+            if (ModelState.IsValid)
+            {
+                Size newSize = new Size
+                {
+                    Name = model.Name
+                };
+                _reposSize.AddSize(newSize);
+                return RedirectToAction(nameof(SizeList));
+            }
+            return RedirectToAction(nameof(AddSize));
         }
         public IActionResult SizeList()
         {
@@ -422,10 +430,19 @@ namespace AppBoutiqueKids.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddShipper(Shipper model)
+        public IActionResult AddShipper(ShipperInputVM model)
         {
-            _reposShipper.AddShipper(model);
-            return RedirectToAction(nameof(ShippersList));
+            if (ModelState.IsValid)
+            {
+                Shipper newShipper = new Shipper
+                {
+                    Name = model.Name,
+                    PhoneNumber = model.PhoneNumber
+                };
+                _reposShipper.AddShipper(newShipper);
+                return RedirectToAction(nameof(ShippersList));
+            }
+            return View(nameof(AddShipper));
         }
 
         public IActionResult ShippersList()
