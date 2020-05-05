@@ -28,9 +28,9 @@ namespace AppBoutiqueKids.Controllers
         private IHubContext<NotificationsHub> _cartHubContext;
         public HomeController(IHubContext<DeliverHub> hub,
             IHubContext<NotificationsHub> cartHubContext,
-            ApplicationDbContext context, 
-            IProduct reposProduct, 
-            ICartDetails reposCartDetails, 
+            ApplicationDbContext context,
+            IProduct reposProduct,
+            ICartDetails reposCartDetails,
             UserManager<User> userManager
             )
         {
@@ -92,7 +92,7 @@ namespace AppBoutiqueKids.Controllers
                 ProductSizeId = model.ProductSizeId
             };
             _reposCartDetails.Add(newCartDetail);
-             
+
             var listOfCartDetails = _context.CartDetails.Where(cd => cd.UserId == model.UserId).Select(s => new CartDetailsViewModel
             {
                 CartDetailsId = s.Id,
@@ -143,7 +143,7 @@ namespace AppBoutiqueKids.Controllers
                 ProductName = s.ProductSize.Product.Name,
                 Quantity = s.Quantity,
                 Price = s.ProductSize.Product.Price
-                
+
             }).ToList());
         }
 
@@ -223,6 +223,25 @@ namespace AppBoutiqueKids.Controllers
         public IActionResult ProductList()
         {
             return View(_reposProduct.GetProducts());
+        }
+
+        [HttpGet]       
+        public IActionResult Search(string SearchTerm)
+        {
+            if (string.IsNullOrEmpty(SearchTerm))
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                var listofproducts = _reposProduct.SearchProducts(SearchTerm);
+                if (listofproducts == null || listofproducts.Count == 0)
+                {
+                    return RedirectToAction("ProductList");
+                }
+                else
+                    return View("ProductList", listofproducts);
+            }
         }
     }
 }

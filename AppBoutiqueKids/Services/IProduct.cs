@@ -13,5 +13,6 @@ namespace AppBoutiqueKids.Services
         Product UpdateProduct(Product product);
         Product DeleteProduct(int Id);
         Product GetProduct(int Id);
+        List<Product> SearchProducts(string searchTerm);
     }
 }

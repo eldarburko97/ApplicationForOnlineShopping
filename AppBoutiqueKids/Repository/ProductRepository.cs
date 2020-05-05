@@ -45,6 +45,15 @@ namespace AppBoutiqueKids.Repository
             return _context.Products.ToList();
         }
 
+        public List<Product> SearchProducts(string searchTerm)
+        {
+          if(string.IsNullOrEmpty(searchTerm))
+            {
+                return _context.Products.ToList();
+            }
+            return _context.Products.Where(w => w.Name.Contains(searchTerm)).ToList();
+        }
+
         public Product UpdateProduct(Product product)
         {
           _context.Products.Update(product);
