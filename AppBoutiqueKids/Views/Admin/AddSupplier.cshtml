@@ -1,18 +1,37 @@
-﻿
+﻿@model SupplierInputVM
 @{
     ViewData["Title"] = "AddSupplier";
 }
 
-<h1>Add Supplier</h1>
-<form action="AddSupplier" method="post">
-    <div>
-        <input type="text" name="Name" placeholder="Name" />
+    <section class="main-content">
+        <div class="row">
+            <div class="span5">
+                <h4 class="title"><span class="text"><strong>Add Supplier</strong> Form</span></h4>
 
-    </div>
-    <div>
-        <input type="text" name="PhoneNumber" placeholder="Phone number" />
+                <form asp-controller="Admin" asp-action="AddSupplier" method="post">
 
-    </div>
-    <button class="btn btn-warning">Add</button>
-</form>
+                    <fieldset>
+                        <div class="control-group">
+                            <label asp-for="Name"></label>
+                            <input asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+
+                        <div class="control-group">
+                            <label asp-for="PhoneNumber"></label>
+                            <input asp-for="PhoneNumber" class="form-control" />
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                        </div>
+
+                        <div class="actions"><input tabindex="9" class="btn btn-warning" type="submit" value="Add"></div>
+                    </fieldset>
+
+
+                </form>
+
+
+            </div>
+
+        </div>
+    </section>
 

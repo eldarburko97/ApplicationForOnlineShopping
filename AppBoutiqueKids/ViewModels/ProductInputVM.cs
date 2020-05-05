@@ -12,10 +12,16 @@ namespace AppBoutiqueKids.ViewModels
     public class ProductInputVM
     {
         public int Id { get; set; }
+        [Required]
+        [MinLength(3)]
         public string Name { get; set; }
+        [Required]
         public decimal Price { get; set; }
+        [Required]
         public int Quantity { get; set; }
+        [Required]
         public int BrandId { get; set; }
+        [Required]
         public int CategoryId { get; set; }
        [Display(Name="Product Image")]
        public IFormFile Photo { get; set; }

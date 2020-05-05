@@ -81,7 +81,7 @@ namespace AppBoutiqueKids.Controllers
             return RedirectToAction(nameof(Index), "Home");
         }
 
-
+        [HttpGet]
         public IActionResult AddProduct()
         {
             ProductInputVM vm = new ProductInputVM();
@@ -134,7 +134,8 @@ namespace AppBoutiqueKids.Controllers
                 }
                 return RedirectToAction("ProductList","Home");
             }
-            return RedirectToAction("AddProduct");
+            return View(vm);
+            //return RedirectToAction("AddProduct", "Admin");
         }
 
         public IActionResult DeleteProduct(int Id)
@@ -218,7 +219,7 @@ namespace AppBoutiqueKids.Controllers
 
         }
 
-       
+       [HttpGet]
         public IActionResult AddCategory()
         {
             return View();
@@ -238,7 +239,7 @@ namespace AppBoutiqueKids.Controllers
 
                 return RedirectToAction("CategoryList");
             }
-            return RedirectToAction("AddCategory");
+            return View();
         }
 
         public IActionResult CategoryList()
@@ -278,15 +279,19 @@ namespace AppBoutiqueKids.Controllers
 
 
         [HttpPost]
-        public IActionResult AddSupplier(Supplier s)
+        public IActionResult AddSupplier(SupplierInputVM model)
         {
-            Supplier supplier = new Supplier()
+            if(ModelState.IsValid)
             {
-                Name = s.Name,
-                PhoneNumber = s.PhoneNumber
-            };
-            _reposSupplier.AddSupplier(supplier);
-            return RedirectToAction("AdminHomePage", "Admin");
+                Supplier supplier = new Supplier
+                {
+                    Name = model.Name,
+                    PhoneNumber = model.PhoneNumber
+                };
+                _reposSupplier.AddSupplier(supplier);
+                return RedirectToAction("SuppliersList");
+            }
+            return View();
         }
 
         public IActionResult SuppliersList()

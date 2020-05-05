@@ -12,6 +12,7 @@ namespace AppBoutiqueKids.ViewModels
         public int Id { get; set; }
         [Required]
         [Column(TypeName = "nvarchar(50)")]
+        [MinLength(5)]
         public string Name { get; set; }
     }
 }
