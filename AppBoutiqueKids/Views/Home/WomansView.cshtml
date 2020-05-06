@@ -11,11 +11,11 @@
 
         <thead>
             <tr>
-                <td>Name</td>
-                <td>Price</td>
-                <td>Brand</td>
-                <td>Category</td>
-                <td>Image</td>
+                <td><strong>Name</strong></td>
+                <td><strong>Price</strong></td>
+                <td><strong>Brand</strong></td>
+                <td><strong>Category</strong></td>
+                <td><strong>Image</strong></td>
             </tr>
         </thead>
 
@@ -24,14 +24,14 @@
             {
                 <tr>
                     <td>@item.Name</td>
-                    <td>@item.Price</td>
+                    <td>@item.Price $</td>
                     <td>@item.Brand.Name</td>
                     <td>@item.Category.Name</td>
                     <td>
                         @{
                             var PhotoPath = "~/Images/" + item.ProductImagePath;
                         }
-                        <img src="@PhotoPath" style="max-height:100px;max-width:100px" />
+                        <img src="@PhotoPath" style="height:80px;width:80px" />
                     </td>
                 </tr>
             }

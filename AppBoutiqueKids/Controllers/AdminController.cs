@@ -375,14 +375,36 @@ namespace AppBoutiqueKids.Controllers
         public IActionResult UpdateBrand(int id)
         {
             var brand = _reposBrand.GetBrand(id);
-            return View(brand);
+            BrandInputViewModel model = new BrandInputViewModel
+            {
+                Id = brand.Id,
+                Name = brand.Name,
+                PhotoPath = brand.Photo
+            };
+            return View(model);
         }
 
         [HttpPost]
-        public IActionResult UpdateBrand(Brand model)
+        public IActionResult UpdateBrand(BrandInputViewModel model)
         {
-            _reposBrand.UpdateBrand(model);
-            return RedirectToAction(nameof(BrandList));
+            if (ModelState.IsValid)
+            {
+                string uniqueFileName = null;
+                if (model.Photo != null)
+                {
+                    string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath,
+                        "images");
+                    uniqueFileName = Guid.NewGuid().ToString() + '_' + model.Photo.FileName;
+                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                    model.Photo.CopyTo(new FileStream(filePath, FileMode.Create));
+                }
+                Brand updateBrand = _reposBrand.GetBrand(model.Id);
+                updateBrand.Name = model.Name;
+                updateBrand.Photo = model.PhotoPath;
+                _reposBrand.UpdateBrand(updateBrand);
+                return RedirectToAction(nameof(BrandList));
+            }
+            return View(nameof(UpdateBrand));
         }
 
        

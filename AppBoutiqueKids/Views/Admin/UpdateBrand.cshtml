@@ -1,12 +1,14 @@
-﻿@model Brand
-
+﻿@model BrandInputViewModel
+@{ 
+    var photoPath="~/images/" + Model.PhotoPath;
+}
 
     <section class="main-content">
         <div class="row">
             <div class="span5">
                 <h4 class="title"><span class="text"><strong>Edit Brand</strong> Form</span></h4>
 
-                <form asp-controller="Admin" asp-action="UpdateBrand" method="post">
+                <form asp-controller="Admin" asp-action="UpdateBrand" method="post" enctype="multipart/form-data">
 
                     <fieldset>
                         <div class="control-group">
@@ -15,7 +17,16 @@
                             <input asp-for="Name" class="form-control" />
                             <span asp-validation-for="Name" class="text-danger"></span>
                         </div>
+                        <div>
+                            <label asp-for="Photo"></label>
 
+                            <div class="custom-file">
+                                <input asp-for="Photo" class="form-control custom-file-input" />
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <img src="@photoPath" style="height:200px ; width:auto" asp-append-version="true" />
+                        </div>
                         <div class="actions"><input tabindex="9" class="btn btn-inverse large" type="submit" value="Submit"></div>
                     </fieldset>
 

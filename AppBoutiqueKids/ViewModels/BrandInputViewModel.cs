@@ -16,5 +16,6 @@ namespace AppBoutiqueKids.ViewModels
         [MaxLength(50)]
         public string Name { get; set; }
         public IFormFile Photo { get; set; }
+        public string PhotoPath { get; set; }
     }
 }

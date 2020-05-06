@@ -29,20 +29,32 @@
 
                 var PhotoPath = "~/images/" + item.ProductImagePath;
 
-                <li class="span3">
+            <li class="span3">
+                @if (User.IsInRole(Globals.Member))
+                {
                     <div class="product-box">
                         <span class="sale_tag"></span>
+
                         <a asp-controller="Home" asp-action="ProductDetails" asp-route-id="@item.Id">
-                            <img alt="" src="@PhotoPath" asp-append-version="true">
+                            <img alt="" src="@PhotoPath" asp-append-version="true" style="width:100px;height:150px;">
                         </a>
                         <br>
                         <a asp-controller="Home" asp-action="ProductDetails" asp-route-id="@item.Id" class="title">
                             @item.Name
                         </a><br>
-                        
-
                     </div>
-                </li>
+                }
+                else
+                {
+                    <div class="product-box">
+                        <span class="sale_tag"></span>
+                            <img alt="" src="@PhotoPath" asp-append-version="true" style="width:100px;height:150px;">
+                        <br />
+                        <strong>@item.Name</strong> 
+                        <br>
+                    </div>
+                }
+            </li>
             }
         </ul>
         <hr>
