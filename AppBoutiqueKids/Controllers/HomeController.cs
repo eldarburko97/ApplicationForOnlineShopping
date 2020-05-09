@@ -65,7 +65,21 @@ namespace AppBoutiqueKids.Controllers
         {
             return View();
         }
-
+        public IActionResult ProductDetailsWithoutLogin(int id)
+        {
+            var product = _reposProduct.GetProduct(id);
+            
+            ProductCartViewModel model = new ProductCartViewModel
+            {
+                Id = product.Id,
+                ProductName = product.Name,
+                Price = product.Price,
+                PhotoPath = product.ProductImagePath,
+                Brand = product.Brand.Name,
+                Category = product.Category.Name
+            };
+            return View(nameof(ProductDetailsWithoutLogin), model);
+        }
         [HttpGet]
         public IActionResult YourCart()
         {

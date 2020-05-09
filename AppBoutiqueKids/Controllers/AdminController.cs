@@ -501,7 +501,11 @@ namespace AppBoutiqueKids.Controllers
                 Product = o.ProductSize.Product.Name,
                 Size = o.ProductSize.Size.Name,
                 User = o.Order.User.UserName,
-                Email = o.Order.User.Email }).ToList();
+                Email = o.Order.User.Email,
+                FirstLastName=o.Order.User.FirstName+' '+o.Order.User.LastName,
+                CityAdressZipCode=o.Order.User.City+' '+o.Order.User.ZipCode+','+o.Order.User.Adress,
+                Phone=o.Order.User.PhoneNumber
+            }).ToList();
 
             IPagedList<OrderListViewModel> list = listOfOrders.ToPagedList(pageNumber ?? 1, 6);
             

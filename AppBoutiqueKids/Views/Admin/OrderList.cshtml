@@ -37,6 +37,8 @@
         <thead>
             <tr>
                 <th>Buyer</th>
+                <th>City and Adress</th>
+                <th>Phone</th>
                 <th>Email</th>
                 <th>Product</th>
                 <th>Size</th>
@@ -47,7 +49,9 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>@item.User</td>
+                    <td>@item.FirstLastName</td>
+                    <td>@item.CityAdressZipCode</td>
+                    <td>@item.Phone</td>
                     <td>@item.Email</td>
                     <td>@item.Product</td>
                     <td>@item.Size</td>

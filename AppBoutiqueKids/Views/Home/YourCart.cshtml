@@ -38,7 +38,7 @@
                             <td><a class="btn btn-warning" asp-controller="Home" asp-action="DeleteCartDetails" asp-route-id="@item.CartDetailsId">Remove</a></td>
                             <td><img alt="" src="~/images/@item.PhotoPath" style="width:50px;height:50px;"></td>
                             <td>@item.ProductName</td>
-                            <td><input asp-for="@item.Quantity" /></td>
+                            <td><input asp-for="@item.Quantity" readonly style="border:none"/></td>
                             <td>$@item.Price</td>
                             <td>$@total</td>
                         </tr>
@@ -64,7 +64,7 @@
             {
                 <form asp-controller="Home" asp-action="ConfirmOrder" method="post">
                     <input asp-for="@UserId" readonly style="visibility:hidden" />
-                    <button class="btn btn-warning" type="submit">Confirm</button>
+                    <button id="confirm" class="btn btn-warning" type="submit">Confirm</button>
                 </form>
             }
 
@@ -132,6 +132,12 @@
     </div>
 </section>
 
-
+<script>
+    $(document).ready(() => {
+        $("#confirm").on('click', function () {
+            alert("Success order!");
+        });
+    });
+</script>
 
 

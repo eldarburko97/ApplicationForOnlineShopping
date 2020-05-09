@@ -48,7 +48,27 @@ namespace AppBoutiqueKids.Areas.Identity.Pages.Account
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
-
+            [Required]
+            [MinLength(2)]
+            [Display(Name="First name")]
+            public string FirstName { get; set; }
+            [Required]
+            [MinLength(2)]
+            [Display(Name = "Last name")]
+            public string LastName { get; set; }
+            [Required]
+            [MinLength(2)]
+            public string City { get; set; }
+            [Required]
+            [MinLength(2)]
+            public string Adress { get; set; }
+            [Required]
+            [MinLength(2)]
+            [MaxLength(5)]
+            public string ZipCode { get; set; }
+            [Required]
+            [Phone]
+            public string Phone { get; set; }
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
@@ -80,7 +100,14 @@ namespace AppBoutiqueKids.Areas.Identity.Pages.Account
                 var user = new User
                 {
                     UserName = Input.Username,
-                    Email = Input.Email
+                    Email = Input.Email,
+                    City=Input.City,
+                    PhoneNumber=Input.Phone,
+                    Adress=Input.Adress,
+                    ZipCode=Input.ZipCode,
+                    FirstName=Input.FirstName,
+                    LastName=Input.LastName
+                    
                 };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)

@@ -13,6 +13,20 @@
             <form asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-stacked">
                 <fieldset>
                     <div class="control-group">
+                        <label asp-for="Input.FirstName" class="control-label"></label>
+                        <div class="controls">
+                            <input asp-for="Input.FirstName" class="input-xlarge" placeholder="First name" id="FirstName" />
+                            <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label asp-for="Input.LastName" class="control-label"></label>
+                        <div class="controls">
+                            <input asp-for="Input.LastName" class="input-xlarge" placeholder="Last name" id="LastName" />
+                            <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="control-group">
                         <label asp-for="Input.Username" class="control-label"></label>
                         <div class="controls">
                             <input asp-for="Input.Username" class="input-xlarge" placeholder="Username" id="Username" />
@@ -24,6 +38,34 @@
                         <div class="controls">
                             <input asp-for="Input.Email" class="input-xlarge" placeholder="Email" id="Email" />
                             <span asp-validation-for="Input.Email" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label asp-for="Input.City" class="control-label"></label>
+                        <div class="controls">
+                            <input asp-for="Input.City" class="input-xlarge" placeholder="City" id="City" />
+                            <span asp-validation-for="Input.City" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label asp-for="Input.Adress" class="control-label"></label>
+                        <div class="controls">
+                            <input asp-for="Input.Adress" class="input-xlarge" placeholder="Adress" id="Adress" />
+                            <span asp-validation-for="Input.Adress" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label asp-for="Input.ZipCode" class="control-label"></label>
+                        <div class="controls">
+                            <input asp-for="Input.ZipCode" class="input-xlarge" placeholder="Zip Code" id="ZipCode" />
+                            <span asp-validation-for="Input.ZipCode" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label asp-for="Input.Phone" class="control-label"></label>
+                        <div class="controls">
+                            <input asp-for="Input.Phone" class="input-xlarge" placeholder="Phone" id="Phone" />
+                            <span asp-validation-for="Input.Phone" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="control-group">
