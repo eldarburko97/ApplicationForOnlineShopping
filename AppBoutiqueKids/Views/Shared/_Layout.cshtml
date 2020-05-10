@@ -60,23 +60,23 @@
     <div id="top-bar" class="container">
         <div class="row">
             <div class="span4">
-                
+
                 @*<form method="POST" class="search_form">
-                    <div class="input-group">
-                        <input type="text" class="input-block-level search-query" Placeholder="eg. T-sirt">
-                        <div class="input-group-append">
-                            <button class="btn btn-warning" type="submit">Search</button>
+                        <div class="input-group">
+                            <input type="text" class="input-block-level search-query" Placeholder="eg. T-sirt">
+                            <div class="input-group-append">
+                                <button class="btn btn-warning" type="submit">Search</button>
+                            </div>
                         </div>
-                    </div>                   
-                </form>*@
+                    </form>*@
 
                 <form asp-controller="Home" asp-action="Search" method="get" class="form-search">
                     <div class="input-append">
                         <input type="text" class="span2 search-query" name="SearchTerm">
                         <button type="submit" class="btn" style="background:#ff5e00 ; color:black">Search</button>
                     </div>
-                </form>                
-                
+                </form>
+
 
             </div>
             <div class="span8">
@@ -120,9 +120,13 @@
                 <nav id="menu" class="pull-right">
                     <ul>
                         <li>
-                            <a href="~/Home/WomansView">Woman</a>
+                            @*<a href="~/Home/WomansView">Woman</a>*@
+                            <a asp-controller="Home" asp-action="WomanView">Woman</a>
                         </li>
-                        <li><a href="~/Home/MansView">Man</a></li>
+                        <li>
+                            @*<a href="~/Home/MansView">Man</a>*@
+                            <a asp-controller="Home" asp-action="ManView">Man</a>
+                        </li>
                     </ul>
                 </nav>
             </div>
@@ -215,7 +219,7 @@
             @*<span>Copyright 2013 bootstrappage template  All right reserved.</span>*@<span></span>
         </section>
     </div>
-    
+
     <script src="~/js/common.js"></script>
     <script src="~/js/jquery.flexslider-min.js"></script>
     @RenderSection("Scripts", required: false)

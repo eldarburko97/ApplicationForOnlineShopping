@@ -200,14 +200,26 @@ namespace AppBoutiqueKids.Controllers
             return RedirectToAction(nameof(ProductList));
         }
 
-        public IActionResult WomansView()
+        public IActionResult WomanView()
         {
-            var listOfWomenProducts = _context.Products.Include(b => b.Brand).Include(c => c.Category).Where(p => p.Category.Name == "Female").ToList();
-            return View(listOfWomenProducts);
+            var listOfWomenProducts = _context.Products.Include(b => b.Brand).Include(c => c.Category).Where(p => p.Category.Name == "Zenska").ToList();
+            int UserId=0;
+            if (_userManager.GetUserId(HttpContext.User)!=null)
+            {
+                UserId = int.Parse(_userManager.GetUserId(HttpContext.User));
+            }
+            ViewBag.userId = UserId;
+             return View(listOfWomenProducts);
         }
-        public IActionResult MansView()
+        public IActionResult ManView()
         {
-            var listOfMenProducts = _context.Products.Include(b => b.Brand).Include(c => c.Category).Where(p => p.Category.Name == "Male").ToList();
+            var listOfMenProducts = _context.Products.Include(b => b.Brand).Include(c => c.Category).Where(p => p.Category.Name == "Muska").ToList();
+            int UserId = 0;
+            if (_userManager.GetUserId(HttpContext.User) != null)
+            {
+                UserId = int.Parse(_userManager.GetUserId(HttpContext.User));
+            }
+            ViewBag.userId = UserId;
             return View(listOfMenProducts);
         }
 
