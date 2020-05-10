@@ -20,18 +20,18 @@
                     </td>
                 </tr>
             </table>
-           
+
         }
 
-    <ul class="thumbnails listing-products">
-        @foreach (var item in Model)
-        {
+        <ul class="thumbnails listing-products">
+            @foreach (var item in Model)
+            {
 
-            var PhotoPath = "~/images/" + item.ProductImagePath;
+                var PhotoPath = "~/images/" + item.ProductImagePath;
 
-            <li class="span3">
-                @if (User.IsInRole(Globals.Member))
-                {
+                <li class="span3">
+                    @if (User.IsInRole(Globals.Member) || User.IsInRole(Globals.Admin))
+                    {
                     <div class="product-box">
                         <span class="sale_tag"></span>
 
@@ -42,23 +42,25 @@
                         <a asp-controller="Home" asp-action="ProductDetails" asp-route-id="@item.Id" class="title">
                             @item.Name
                         </a><br>
+                        <p class="price">$@item.Price</p>
                     </div>
-                }
-                else
-                {
-            <div class="product-box">
-                <span class="sale_tag"></span>
-                <a href="/Home/ProductDetailsWithoutLogin/@item.Id"><img alt="" src="@PhotoPath" asp-append-version="true" style="width:150px;height:150px;"></a>
-                <br />
-                <a href="/Home/ProductDetailsWithoutLogin/@item.Id"><strong>@item.Name.ToUpper()</strong></a>
-                <br>
-            </div>
-                }
-            </li>
+                    }
+                    else
+                    {
+                <div class="product-box">
+                    <span class="sale_tag"></span>
+                    <a href="/Home/ProductDetailsWithoutLogin/@item.Id"><img alt="" src="@PhotoPath" asp-append-version="true" style="width:150px;height:150px;"></a>
+                    <br />
+                    <a href="/Home/ProductDetailsWithoutLogin/@item.Id"><strong>@item.Name.ToUpper()</strong></a>
+                    <br>
+                    <p class="price">$@item.Price</p>
+                </div>
+                    }
+                </li>
             }
         </ul>
         <hr>
-        
+
     </div>
 </div>
 

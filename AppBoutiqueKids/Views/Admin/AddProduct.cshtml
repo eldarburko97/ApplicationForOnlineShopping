@@ -33,6 +33,7 @@
                         <select asp-for="BrandId" class="form-control" asp-items="@(Model.Brands)">
                             <option value="">-- Select Brand --</option>
                         </select>
+                        <span asp-validation-for="BrandId" class="text-danger"></span>
                     </div>
 
                     <div class="control-group">
@@ -40,6 +41,7 @@
                         <select asp-for="CategoryId" class="form-control" asp-items="@(Model.Categories)">
                             <option value="">-- Select Category --</option>
                         </select>
+                        <span asp-validation-for="CategoryId" class="text-danger"></span>
                     </div>
 
 

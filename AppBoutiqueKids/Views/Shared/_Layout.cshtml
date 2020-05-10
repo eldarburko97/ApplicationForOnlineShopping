@@ -23,7 +23,7 @@
     <link href="~/css/flexslider.css" rel="stylesheet" />
     <link href="~/css/main.css" rel="stylesheet" />
 
-    <link href="~/css/product.css" rel="stylesheet" />
+    @*<link href="~/css/product.css" rel="stylesheet" />*@
 
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -92,14 +92,18 @@
                         }
                         else
                         {
-                            <li>
-                                <a asp-action="YourCart" asp-controller="Home">
-                                    <i class="fa fa-shopping-cart" style="font-size:20px"></i>
-                                </a>
+                            if (User.IsInRole(Globals.Member))
+                            {
+                                <li>
+                                    <a asp-action="YourCart" asp-controller="Home">
+                                        <i class="fa fa-shopping-cart" style="font-size:20px"></i>
+                                    </a>
 
 
-                                <span id="cart_count">0</span>
-                            </li>
+                                    <span id="cart_count">0</span>
+                                </li>
+                            }
+
                             <li><a href="#">@User.Identity.Name</a></li>
                             <li>
                                 <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm">
@@ -181,7 +185,11 @@
                     <ul class="nav">
                         <li><a href="~/Home/Index">Homepage</a></li>
                         <li><a href="~/Home/ContactUs">Contact Us</a></li>
-                        <li><a href="~/Home/Cart">Your Cart</a></li>
+                        @*<li><a href="~/Home/Cart">Your Cart</a></li>*@
+                        @if (User.IsInRole(Globals.Member))
+                        {
+                            <li><a asp-controller="Home" asp-action="YourCart">Your Cart</a></li>
+                        }
                         <li><a href="/Identity/Account/Login">Login</a></li>
                     </ul>
                 </div>

@@ -20,9 +20,10 @@ namespace AppBoutiqueKids.ViewModels
         [Required]
         public int Quantity { get; set; }
         [Required]
-        public int BrandId { get; set; }
+        public int? BrandId { get; set; }
         [Required]
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
+
        [Display(Name="Product Image")]
        public IFormFile Photo { get; set; }
         //slika

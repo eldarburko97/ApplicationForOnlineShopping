@@ -117,8 +117,8 @@ namespace AppBoutiqueKids.Controllers
                     Name = vm.Name,
                     Price = vm.Price,
                     Quantity = vm.Quantity,
-                    BrandId = vm.BrandId,
-                    CategoryId = vm.CategoryId,
+                    BrandId = vm.BrandId.Value,
+                    CategoryId = vm.CategoryId.Value,
                     ProductImagePath = uniqueFileName
                 };
                 _reposProduct.AddProduct(product);
@@ -176,8 +176,8 @@ namespace AppBoutiqueKids.Controllers
                 product.Name = vm.Name;
                 product.Price = vm.Price;
                 product.Quantity = vm.Quantity;
-                product.BrandId = vm.BrandId;
-                product.CategoryId = vm.CategoryId;
+                product.BrandId = vm.BrandId.Value;
+                product.CategoryId = vm.CategoryId.Value;
 
                 string FileName = null;
 

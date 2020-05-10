@@ -7,7 +7,7 @@
 <div class="row">
     <div class="span12">
         <h4 class="title">
-            <span class="pull-left"><span class="text"><span class="line">Latest Female <strong>Products</strong></span></span></span>
+            <span class="pull-left"><span class="text"><span class="line">Male <strong>Products</strong></span></span></span>
             <span class="pull-right">
                 <a class="left button" href="#myCarousel-2" data-slide="prev"></a><a class="right button" href="#myCarousel-2" data-slide="next"></a>
             </span>
@@ -20,10 +20,10 @@
                         {
                             var PhotoPath = "~/images/" + item.ProductImagePath;
                             <li class="span3">
-                                <div class="product-box">
+                                <div class="product-box" style="height:300px ; width:300px">
                                     @if (UserId != 0)
                                     {
-                                        <p><a asp-controller="Home" asp-action="ProductDetails" asp-route-id="@item.Id"><img src="@PhotoPath" asp-append-version="true" alt="" /></a></p>
+                                        <p><a asp-controller="Home" asp-action="ProductDetails" asp-route-id="@item.Id"><img style="width:150px ; height:150px" src="@PhotoPath" asp-append-version="true" alt="" /></a></p>
                                         <a asp-controller="Home" asp-action="ProductDetails" asp-route-id="@item.Id" class="title">@item.Name</a><br />
                                     }
                                     else
@@ -31,7 +31,7 @@
                                         <p><a asp-controller="Home" asp-action="ProductDetailsWithoutLogin" asp-route-id="@item.Id"><img src="@PhotoPath" asp-append-version="true" alt="" /></a></p>
                                         <a asp-controller="Home" asp-action="ProductDetailsWithoutLogin" asp-route-id="@item.Id" class="title">@item.Name</a><br />
                                     }
-                                    <p class="price">@item.Price</p>
+                                    <p class="price">$@item.Price</p>
                                 </div>
                             </li>
                         }

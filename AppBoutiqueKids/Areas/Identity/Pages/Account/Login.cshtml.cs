@@ -152,6 +152,7 @@ namespace AppBoutiqueKids.Areas.Identity.Pages.Account
             public string Email { get; set; }*/
 
             [Required]
+            [Display(Name ="Username")]
             public string UserName { get; set; }
 
             [Required]
