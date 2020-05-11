@@ -16,7 +16,7 @@ namespace AppBoutiqueKids.Repository
         {
             _context = context;
         }
-        public IEnumerable<Brand> GetBrands() => _context.Brands;
+        public IEnumerable<Brand> GetBrands() => _context.Brands.ToList();
         Brand IBrand.AddBrand(Brand brand)
         {
             _context.Brands.Add(brand);

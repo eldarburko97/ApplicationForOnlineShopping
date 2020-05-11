@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -17,5 +18,6 @@ namespace AppBoutiqueKids.ViewModels
         [Phone]
         [MaxLength(15)]
         public string PhoneNumber { get; set; }
+        public IFormFile Photo { get; set; }
     }
 }

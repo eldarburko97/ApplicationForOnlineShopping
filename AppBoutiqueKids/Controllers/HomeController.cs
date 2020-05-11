@@ -92,6 +92,9 @@ namespace AppBoutiqueKids.Controllers
                 Quantity = s.Quantity,
                 Price = s.ProductSize.Product.Price
             }).ToList();
+            var shipper = _context.Shippers.Where(s => s.Name == "euroexpress").FirstOrDefault();
+            var shipperPhotoPath = "~/images/" + shipper.Photo;
+            ViewBag.ShipperLogo = shipperPhotoPath;
             ViewBag.UserId = userId;
             return View(listOfCartDetails);
         }
@@ -202,7 +205,7 @@ namespace AppBoutiqueKids.Controllers
 
         public IActionResult WomanView()
         {
-            var listOfWomenProducts = _context.Products.Include(b => b.Brand).Include(c => c.Category).Where(p => p.Category.Name == "Zenska").ToList();
+            var listOfWomenProducts = _context.Products.Include(b => b.Brand).Include(c => c.Category).Where(p => p.Category.Name == "Female").ToList();
             int UserId=0;
             if (_userManager.GetUserId(HttpContext.User)!=null)
             {
@@ -213,7 +216,7 @@ namespace AppBoutiqueKids.Controllers
         }
         public IActionResult ManView()
         {
-            var listOfMenProducts = _context.Products.Include(b => b.Brand).Include(c => c.Category).Where(p => p.Category.Name == "Muska").ToList();
+            var listOfMenProducts = _context.Products.Include(b => b.Brand).Include(c => c.Category).Where(p => p.Category.Name == "Male").ToList();
             int UserId = 0;
             if (_userManager.GetUserId(HttpContext.User) != null)
             {

@@ -19,5 +19,6 @@ namespace AppBoutiqueKids.Models
         [Required]
         [Column(TypeName = "nvarchar(15)")]
         public string PhoneNumber { get; set; }
+        public string Photo { get; set; }
     }
 }

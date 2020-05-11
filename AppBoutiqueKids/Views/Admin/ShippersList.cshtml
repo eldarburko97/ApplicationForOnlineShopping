@@ -23,6 +23,7 @@
             <tr>
                 <th>Name</th>
                 <th>Phone Number</th>
+                <th>Logo</th>
             </tr>
         </thead>
 
@@ -32,6 +33,7 @@
                 <tr>
                     <td>@item.Name</td>
                     <td>@item.PhoneNumber</td>
+                    <td><img src="~/images/@item.Photo" style="width:100px ; height:100px" asp-append-version="true" /></td>
                     <td><a class="btn btn-danger" asp-controller="Admin" asp-action="DeleteShipper" asp-route-id="@item.Id">Delete</a></td>
                     <td><a class="btn btn-primary" asp-controller="Admin" asp-action="UpdateShipper" asp-route-id="@item.Id">Edit</a></td>
                 </tr>

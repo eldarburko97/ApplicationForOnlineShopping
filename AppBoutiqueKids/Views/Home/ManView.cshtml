@@ -28,7 +28,7 @@
                                     }
                                     else
                                     {
-                                        <p><a asp-controller="Home" asp-action="ProductDetailsWithoutLogin" asp-route-id="@item.Id"><img src="@PhotoPath" asp-append-version="true" alt="" /></a></p>
+                                        <p><a asp-controller="Home" asp-action="ProductDetailsWithoutLogin" asp-route-id="@item.Id"><img style="width:150px ; height:150px" src="@PhotoPath" asp-append-version="true" alt="" /></a></p>
                                         <a asp-controller="Home" asp-action="ProductDetailsWithoutLogin" asp-route-id="@item.Id" class="title">@item.Name</a><br />
                                     }
                                     <p class="price">$@item.Price</p>

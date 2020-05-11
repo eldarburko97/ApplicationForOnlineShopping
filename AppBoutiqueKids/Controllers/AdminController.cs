@@ -361,7 +361,8 @@ namespace AppBoutiqueKids.Controllers
         }
         public IActionResult BrandList()
         {
-            return View(_reposBrand.GetBrands());
+            var model = _reposBrand.GetBrands();
+            return View(model);
         }
 
 
@@ -400,7 +401,7 @@ namespace AppBoutiqueKids.Controllers
                 }
                 Brand updateBrand = _reposBrand.GetBrand(model.Id);
                 updateBrand.Name = model.Name;
-                updateBrand.Photo = model.PhotoPath;
+                updateBrand.Photo = uniqueFileName;
                 _reposBrand.UpdateBrand(updateBrand);
                 return RedirectToAction(nameof(BrandList));
             }
@@ -461,10 +462,20 @@ namespace AppBoutiqueKids.Controllers
         {
             if (ModelState.IsValid)
             {
+                string uniqueFileName = null;
+                if (model.Photo != null)
+                {
+                    string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath,
+                        "images");
+                    uniqueFileName = Guid.NewGuid().ToString() + '_' + model.Photo.FileName;
+                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                    model.Photo.CopyTo(new FileStream(filePath, FileMode.Create));
+                }
                 Shipper newShipper = new Shipper
                 {
                     Name = model.Name,
-                    PhoneNumber = model.PhoneNumber
+                    PhoneNumber = model.PhoneNumber,
+                    Photo=uniqueFileName
                 };
                 _reposShipper.AddShipper(newShipper);
                 return RedirectToAction(nameof(ShippersList));
@@ -507,7 +518,7 @@ namespace AppBoutiqueKids.Controllers
                 Phone=o.Order.User.PhoneNumber
             }).ToList();
 
-            IPagedList<OrderListViewModel> list = listOfOrders.ToPagedList(pageNumber ?? 1, 6);
+            IPagedList<OrderListViewModel> list = listOfOrders.ToPagedList(pageNumber ?? 1, 5);
             
             return View(list);
         }

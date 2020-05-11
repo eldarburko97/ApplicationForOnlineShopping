@@ -46,7 +46,7 @@
                         <label>Qty:</label>
                         <input asp-for="@Model.QuantityForBuy"><br />
                         <label>Availability sizes:</label><select asp-for="@Model.ProductSizeId" asp-items="@Model.ProductSizes"></select><br />
-                        <input type="submit" class="btn btn-inverse" value="Add to cart" />
+                        <input id="addToCart" type="submit" class="btn btn-inverse" value="Add to cart" />
                     </form>
                 }
             </div>
@@ -83,7 +83,6 @@
             var connectionCart = new signalR.HubConnectionBuilder().withUrl("/cart").build();
             connectionCart.on("UpdateCart", (count) => {               
                 document.getElementById("cart_count").innerHTML = count;
-
             });
 
             connectionCart.start().then(() => {
