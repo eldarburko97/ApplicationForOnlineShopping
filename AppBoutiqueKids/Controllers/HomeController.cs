@@ -126,6 +126,16 @@ namespace AppBoutiqueKids.Controllers
         [HttpPost]
         public IActionResult AddToCart(ProductCartViewModel model)
         {
+            var listOfCartDetails = _reposCartDetails.GetCartDetails();
+            foreach(var item in listOfCartDetails)
+            {
+                if (item.ProductSizeId == model.ProductSizeId)
+                {
+                    item.Quantity += model.QuantityForBuy;
+                    _reposCartDetails.UpdateCartDetail(item);
+                    return Ok();
+                }
+            }
             CartDetails newCartDetail = new CartDetails
             {
                 UserId = model.UserId,
@@ -133,7 +143,6 @@ namespace AppBoutiqueKids.Controllers
                 ProductSizeId = model.ProductSizeId
             };
             _reposCartDetails.Add(newCartDetail);
-
             return Ok();
         }
 

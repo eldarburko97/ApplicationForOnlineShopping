@@ -53,15 +53,17 @@ namespace AppBoutiqueKids
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
-            /* services.AddDefaultIdentity<IdentityUser>()
-                 .AddDefaultUI(UIFramework.Bootstrap4)
-                 .AddEntityFrameworkStores<ApplicationDbContext>();*/
+            
 
-            services.AddIdentity<User, Role>(config => { config.SignIn.RequireConfirmedEmail = false; })
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultUI()
-                .AddDefaultTokenProviders();
-
+            services.AddIdentity<User, Role>(config => {
+                config.SignIn.RequireConfirmedEmail = false;
+                config.Password.RequireDigit = false;
+                config.Password.RequireUppercase = false;
+                config.Password.RequireNonAlphanumeric = false;
+            }).AddEntityFrameworkStores<ApplicationDbContext>()
+              .AddDefaultUI()
+              .AddDefaultTokenProviders();
+            
             services.AddScoped<IUserData, UserData>();
             services.AddScoped<IProduct, ProductRepository>();
             services.AddScoped<ISupplier, SupplierRepository>();

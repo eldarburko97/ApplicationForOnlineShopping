@@ -12,5 +12,6 @@ namespace AppBoutiqueKids.Services
         CartDetails GetCartDetail(int id);
         List<CartDetails> GetCartDetails();
         CartDetails DeleteCartDetail(int id);
+        CartDetails UpdateCartDetail(CartDetails model);
     }
 }

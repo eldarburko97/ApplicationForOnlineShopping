@@ -44,7 +44,7 @@
                         <label>Product name:</label><input asp-for="@Model.ProductName" readonly /><br />
                         <label>Price:</label><input asp-for="@Model.Price" readonly /><br />
                         <label>Qty:</label>
-                        <input asp-for="@Model.QuantityForBuy"><br />
+                        <input min="1" max="@Model.Quantity" asp-for="@Model.QuantityForBuy"><br />
                         <label>Availability sizes:</label><select asp-for="@Model.ProductSizeId" asp-items="@Model.ProductSizes"></select><br />
                         <input id="addToCart" type="submit" class="btn btn-inverse" value="Add to cart" />
                     </form>

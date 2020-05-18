@@ -40,6 +40,13 @@ namespace AppBoutiqueKids.Repository
         }
 
         public List<CartDetails> GetCartDetails() => _context.CartDetails.ToList();
-        
+
+        public CartDetails UpdateCartDetail(CartDetails model)
+        {
+            var cartDetail = _context.CartDetails.Find(model.Id);
+            _context.CartDetails.Update(cartDetail);
+            _context.SaveChanges();
+            return cartDetail;
+        }
     }
 }

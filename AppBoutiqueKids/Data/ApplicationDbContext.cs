@@ -21,7 +21,7 @@ namespace AppBoutiqueKids.Data
     
         public DbSet<Category> Categories { get; set; }
         
-        public DbSet<CreditCards> Credit_Cards { get; set; }
+        
         public DbSet<Order> Orders { get; set; }
         public DbSet<CartDetails> CartDetails { get; set; }
         public DbSet<OrderDetails> OrderDetails { get; set; }
