@@ -19,9 +19,9 @@ namespace AppBoutiqueKids.ViewModels
         public decimal Price { get; set; }
         [Required]
         public int Quantity { get; set; }
-        [Required]
+        [Required(ErrorMessage ="The brand field is required!")]
         public int? BrandId { get; set; }
-        [Required]
+        [Required(ErrorMessage ="The category field is required!")]
         public int? CategoryId { get; set; }
 
        [Display(Name="Product Image")]

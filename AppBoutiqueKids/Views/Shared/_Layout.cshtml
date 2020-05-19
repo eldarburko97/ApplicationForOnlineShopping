@@ -83,7 +83,7 @@
                         }
                         else
                         {
-                            if (User.IsInRole(Globals.Member))
+                            if (User.IsInRole(Globals.Member) && !User.IsInRole(Globals.Admin))
                             {
                                 <li>
                                     <a asp-action="YourCart" asp-controller="Home">
@@ -98,7 +98,7 @@
                             <li><a href="#">@User.Identity.Name</a></li>
                             <li>
                                 <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm">
-                                    @*Logout*@
+                                    
                                     <input type="submit" value="Logout" />
                                 </form>
                             </li>
@@ -114,12 +114,22 @@
                 <a href="index.html" class="logo pull-left"><img src="~/images/logo.png" class="site_logo" alt=""></a>
                 <nav id="menu" class="pull-right">
                     <ul>
+                        @if (User.IsInRole(Globals.Admin))
+                        {
+                            <li>
+                                <a asp-controller="Admin" asp-action="AdminHomePage">Homepage</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <a asp-controller="Home" asp-action="ProductList">Homepage</a>
+                            </li>
+                        }
                         <li>
-                            @*<a href="~/Home/WomansView">Woman</a>*@
                             <a asp-controller="Home" asp-action="WomanView">Woman</a>
                         </li>
                         <li>
-                            @*<a href="~/Home/MansView">Man</a>*@
                             <a asp-controller="Home" asp-action="ManView">Man</a>
                         </li>
                     </ul>
@@ -176,7 +186,6 @@
                     <ul class="nav">
                         <li><a href="~/Home/Index">Homepage</a></li>
                         <li><a href="~/Home/ContactUs">Contact Us</a></li>
-                        @*<li><a href="~/Home/Cart">Your Cart</a></li>*@
                         @if (User.IsInRole(Globals.Member))
                         {
                             <li><a asp-controller="Home" asp-action="YourCart">Your Cart</a></li>
@@ -184,15 +193,7 @@
                         <li><a href="/Identity/Account/Login">Login</a></li>
                     </ul>
                 </div>
-                @*<div class="span4">
-                        <h4>My Account</h4>
-                        <ul class="nav">
-                            <li><a href="#">My Account</a></li>
-                            <li><a href="#">Order History</a></li>
-                            <li><a href="#">Wish List</a></li>
-                            <li><a href="#">Newsletter</a></li>
-                        </ul>
-                    </div>*@<div class="span4">
+                <div class="span4">
                     <h4></h4>
                     <ul class="nav">
                         <li><a href="#"></a></li>
