@@ -205,7 +205,7 @@ namespace AppBoutiqueKids.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, "You have entered the wrong username or password.");
                     return Page();
                 }
             }
